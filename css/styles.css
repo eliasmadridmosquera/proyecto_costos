@@ -91,6 +91,7 @@ a{color:inherit;}
   font-size:var(--text-base); color:var(--text-muted); border-radius:var(--radius-sm);
 }
 .primary-nav a:hover{background:var(--surface-2); color:var(--text);}
+.primary-nav a.active{color:var(--text); font-weight:700;}
 .nav-cta{
   margin-top:var(--space-2); display:inline-block; text-align:center;
   background:var(--accent); color:var(--accent-contrast) !important;
@@ -124,7 +125,8 @@ a{color:inherit;}
 .preview-caption{margin:var(--space-3) 0 0; font-size:var(--text-xs); color:var(--text-soft); text-align:center;}
 
 /* ── Secciones genéricas ── */
-.section{padding:var(--space-10) 0;}
+.section{padding:var(--space-10) 0; scroll-margin-top:80px;}
+.hero{scroll-margin-top:80px;}
 .section-head{margin-bottom:var(--space-5);}
 .section-head h2{font-size:var(--text-lg); margin:0 0 var(--space-1); font-weight:700;}
 .section-head p{font-size:var(--text-sm); color:var(--text-muted); margin:0;}
@@ -242,4 +244,28 @@ a{color:inherit;}
   .hero-copy h1{font-size:var(--text-2xl);}
 
   .roles-list{grid-template-columns:repeat(4, 1fr);}
+}
+
+/* ══════════════════════════════════════════════════════════
+   Animaciones de feedback (formulario + nav activo)
+   Deshabilitadas por defecto; solo se activan si el usuario
+   no pidió "reducir movimiento" en su sistema.
+   ══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: no-preference){
+  @keyframes form-status-in{
+    from{opacity:0; transform:translateY(6px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @keyframes field-shake{
+    10%, 90%{transform:translateX(-1px);}
+    20%, 80%{transform:translateX(2px);}
+    30%, 50%, 70%{transform:translateX(-4px);}
+    40%, 60%{transform:translateX(4px);}
+  }
+
+  .form-status.anim-in{animation:form-status-in .3s ease;}
+  .form-field.shake input,
+  .form-field.shake select{animation:field-shake .4s ease;}
+
+  .primary-nav a{transition:color .15s ease, background-color .15s ease;}
 }

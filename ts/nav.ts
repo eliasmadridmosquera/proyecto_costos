@@ -38,3 +38,49 @@ function esHTMLElement(value: unknown): value is HTMLElement {
     });
   });
 })();
+
+/** Resalta en el nav el enlace de la sección visible mientras se hace scroll. */
+function resaltarNavActivo(): void {
+  const enlaces = Array.from(
+    document.querySelectorAll<HTMLAnchorElement>('.primary-nav a[href^="#"]')
+  );
+
+  const objetivos = enlaces
+    .map((enlace) => {
+      const id = enlace.getAttribute('href')?.slice(1) ?? '';
+      const seccion = document.getElementById(id);
+      return seccion ? { enlace, seccion } : null;
+    })
+    .filter((objetivo): objetivo is { enlace: HTMLAnchorElement; seccion: HTMLElement } =>
+      objetivo !== null
+    );
+
+  if (objetivos.length === 0) return;
+
+  function marcarActivo(idSeccionVisible: string): void {
+    objetivos.forEach(({ enlace, seccion }) => {
+      const esActivo = seccion.id === idSeccionVisible;
+      enlace.classList.toggle('active', esActivo);
+      if (esActivo) {
+        enlace.setAttribute('aria-current', 'true');
+      } else {
+        enlace.removeAttribute('aria-current');
+      }
+    });
+  }
+
+  const observer = new IntersectionObserver(
+    (entradas) => {
+      const masVisible = entradas
+        .filter((entrada) => entrada.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (masVisible) marcarActivo((masVisible.target as HTMLElement).id);
+    },
+    { rootMargin: '-40% 0px -50% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
+  );
+
+  objetivos.forEach(({ seccion }) => observer.observe(seccion));
+  marcarActivo(objetivos[0].seccion.id);
+}
+
+resaltarNavActivo();

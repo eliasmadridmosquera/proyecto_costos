@@ -62,15 +62,23 @@ function esInputOSelect(value: unknown): value is HTMLInputElement | HTMLSelectE
     return esInputOSelect(el) ? el : null;
   }
 
-  function mostrarError(campo: CampoId, mensaje: string | null): void {
+  function mostrarError(campo: CampoId, mensaje: string | null, animar = false): void {
     const input = getInput(campo);
     const errorEl = document.getElementById(`${campo}-error`);
     const wrapper = input?.closest('.form-field');
-    if (!input || !errorEl || !wrapper) return;
+    if (!input || !errorEl || !(wrapper instanceof HTMLElement)) return;
 
     errorEl.textContent = mensaje ?? '';
     input.setAttribute('aria-invalid', mensaje ? 'true' : 'false');
     wrapper.classList.toggle('is-invalid', Boolean(mensaje));
+
+    // Feedback visual: solo se anima al validar el envío completo, no en cada
+    // pulsación, para no "temblar" la pantalla mientras el usuario escribe.
+    if (animar && mensaje) {
+      wrapper.classList.remove('shake');
+      void wrapper.offsetWidth; // fuerza reflow para poder repetir la animación
+      wrapper.classList.add('shake');
+    }
   }
 
   function leerDatos(): SolicitudAcceso {
@@ -84,8 +92,9 @@ function esInputOSelect(value: unknown): value is HTMLInputElement | HTMLSelectE
   function mostrarEstado(mensaje: string, tipo: 'success' | 'error'): void {
     if (!status) return;
     status.textContent = mensaje;
-    status.classList.remove('is-success', 'is-error');
-    status.classList.add(tipo === 'success' ? 'is-success' : 'is-error');
+    status.classList.remove('is-success', 'is-error', 'anim-in');
+    void status.offsetWidth; // fuerza reflow para repetir la animación en envíos sucesivos
+    status.classList.add(tipo === 'success' ? 'is-success' : 'is-error', 'anim-in');
   }
 
   // Validación en tiempo real: al escribir y al salir del campo.
@@ -102,7 +111,7 @@ function esInputOSelect(value: unknown): value is HTMLInputElement | HTMLSelectE
     const datos = leerDatos();
     const errores = validarSolicitud(datos);
 
-    campos.forEach((campo) => mostrarError(campo, errores[campo] ?? null));
+    campos.forEach((campo) => mostrarError(campo, errores[campo] ?? null, true));
 
     if (Object.keys(errores).length > 0) {
       mostrarEstado('Revisa los campos marcados antes de continuar.', 'error');

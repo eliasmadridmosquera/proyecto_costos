@@ -1,4 +1,5 @@
 "use strict";
+const CORREO_ADMIN_DEMO = 'admin@umeridiano.edu.ec';
 const validadoresLogin = {
     correo: validarCorreoInstitucional,
     contrasena(valor) {
@@ -71,6 +72,13 @@ function esInputElement(value) {
             const primerInvalido = campos.find((campo) => errores[campo]);
             if (primerInvalido)
                 getInput(primerInvalido)?.focus();
+            return;
+        }
+        if (datos.correo.trim().toLowerCase() === CORREO_ADMIN_DEMO) {
+            mostrarEstado('Credenciales válidas. Entrando al Panel de Administrador…', 'success');
+            window.setTimeout(() => {
+                window.location.href = 'importar.html';
+            }, 600);
             return;
         }
         mostrarEstado('Credenciales válidas (demo). El inicio de sesión real requiere el backend — ver hoja de ruta del proyecto.', 'success');

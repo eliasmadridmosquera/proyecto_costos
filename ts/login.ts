@@ -5,6 +5,8 @@ interface Credenciales {
 
 type CampoLogin = keyof Credenciales;
 
+const CORREO_ADMIN_DEMO = 'admin@umeridiano.edu.ec';
+
 const validadoresLogin: Record<CampoLogin, (valor: string) => string | null> = {
   correo: validarCorreoInstitucional,
   contrasena(valor) {
@@ -81,6 +83,14 @@ function esInputElement(value: unknown): value is HTMLInputElement {
       mostrarEstado('Revisa los campos marcados antes de continuar.', 'error');
       const primerInvalido = campos.find((campo) => errores[campo]);
       if (primerInvalido) getInput(primerInvalido)?.focus();
+      return;
+    }
+
+    if (datos.correo.trim().toLowerCase() === CORREO_ADMIN_DEMO) {
+      mostrarEstado('Credenciales válidas. Entrando al Panel de Administrador…', 'success');
+      window.setTimeout(() => {
+        window.location.href = 'importar.html';
+      }, 600);
       return;
     }
 

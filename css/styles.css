@@ -144,8 +144,13 @@ a{color:inherit;}
   display:grid; grid-template-columns:1fr; gap:var(--space-3);
 }
 .role-card{
+  position:relative; overflow:hidden;
   background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  padding:var(--space-5); border-top:3px solid var(--color-primary);
+  padding:var(--space-5);
+}
+.role-card::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:var(--color-primary);
 }
 .role-num{
   display:inline-flex; align-items:center; justify-content:center;
@@ -182,11 +187,12 @@ a{color:inherit;}
 .access-form{
   display:grid; grid-template-columns:1fr; gap:var(--space-5);
 }
-.form-field{display:flex; flex-direction:column; gap:var(--space-2);}
+.form-field{display:flex; flex-direction:column; gap:var(--space-2); min-width:0;}
 .form-field label{font-size:var(--text-sm); font-weight:600;}
 .form-field .hint{font-size:var(--text-xs); color:var(--text-soft); margin:0;}
 .form-field input,
 .form-field select{
+  width:100%; box-sizing:border-box;
   font-family:var(--font); font-size:var(--text-base); color:var(--text);
   padding:var(--space-3) var(--space-4); border-radius:var(--radius-sm);
   border:1px solid var(--border-strong); background:var(--surface);
@@ -216,9 +222,14 @@ a{color:inherit;}
 /* ── Páginas de autenticación (login / registro / recuperar clave) ── */
 .auth-section{padding:var(--space-12) 0;}
 .auth-panel{
+  position:relative; overflow:hidden;
   max-width:420px; margin:0 auto;
   background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg);
-  padding:var(--space-6); border-top:3px solid var(--color-primary);
+  padding:var(--space-6);
+}
+.auth-panel::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:var(--color-primary);
 }
 .auth-panel .section-head{text-align:center; margin-bottom:var(--space-6);}
 .auth-panel .btn-primary{width:100%;}

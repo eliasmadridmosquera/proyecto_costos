@@ -123,12 +123,8 @@ a{color:inherit;}
   background:var(--surface-2); border:1px solid var(--border-strong); border-radius:var(--radius-lg);
   padding:var(--space-5);
 }
-.preview-frame{
-  aspect-ratio:16/10; border:1px dashed var(--border-strong); border-radius:var(--radius);
-  background:
-    linear-gradient(135deg, transparent calc(50% - .5px), var(--border-strong) calc(50% - .5px), var(--border-strong) calc(50% + .5px), transparent calc(50% + .5px)),
-    linear-gradient(45deg, transparent calc(50% - .5px), var(--border-strong) calc(50% - .5px), var(--border-strong) calc(50% + .5px), transparent calc(50% + .5px));
-}
+.preview-frame{aspect-ratio:16/10;}
+.preview-frame svg{width:100%; height:100%; display:block;}
 .preview-caption{margin:var(--space-3) 0 0; font-size:var(--text-xs); color:var(--text-soft); text-align:center;}
 
 /* ── Secciones genéricas ── */
@@ -174,8 +170,9 @@ a{color:inherit;}
 .feature-icon{
   flex-shrink:0; width:38px; height:38px; border-radius:var(--radius);
   background:var(--color-primary-tint); border:1px solid var(--border);
-  display:flex; align-items:center; justify-content:center; font-size:18px;
+  display:flex; align-items:center; justify-content:center; color:var(--color-primary);
 }
+.feature-icon svg{width:20px; height:20px;}
 .feature-item h3{font-size:var(--text-md); margin:0 0 3px; font-weight:600;}
 .feature-item p{font-size:var(--text-sm); color:var(--text-muted); margin:0;}
 

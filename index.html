@@ -69,7 +69,66 @@
         </div>
 
         <div class="hero-preview">
-          <div class="preview-frame" role="img" aria-label="Vista previa ilustrativa del panel de control con gráficos de costos"></div>
+          <div class="preview-frame">
+            <svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vista previa ilustrativa de un dashboard con tarjetas de indicadores y un gráfico de barras por carrera">
+              <style>
+                .pv-bg{fill:var(--surface);}
+                .pv-border{fill:none;stroke:var(--border);stroke-width:1;}
+                .pv-header{fill:var(--color-primary);}
+                .pv-dot{fill:#fff;opacity:.9;}
+                .pv-navline{fill:#fff;opacity:.45;}
+                .pv-card{fill:var(--surface);stroke:var(--border);stroke-width:1;}
+                .pv-label{fill:var(--text-soft);font-family:Roboto,sans-serif;letter-spacing:.05em;}
+                .pv-value{fill:var(--text);font-family:Roboto,sans-serif;font-weight:700;}
+                .pv-delta{fill:#2E7D46;font-family:Roboto,sans-serif;font-weight:600;}
+                .pv-caption{fill:var(--text-soft);font-family:Roboto,sans-serif;}
+                .pv-bar{fill:var(--color-primary);opacity:.85;}
+                .pv-bar-accent{fill:var(--color-accent);}
+                .pv-axis{stroke:var(--border);stroke-width:1;}
+              </style>
+
+              <rect class="pv-bg" x="0.5" y="0.5" width="399" height="249" rx="12"/>
+              <rect class="pv-border" x="0.5" y="0.5" width="399" height="249" rx="12"/>
+
+              <path d="M0.5 12.5a12 12 0 0 1 12-12h375a12 12 0 0 1 12 12v20h-399z" class="pv-header"/>
+              <circle class="pv-dot" cx="20" cy="22" r="5"/>
+              <rect class="pv-navline" x="330" y="18" width="50" height="8" rx="4"/>
+
+              <g>
+                <rect class="pv-card" x="16" y="48" width="115" height="66" rx="8"/>
+                <text class="pv-label" x="28" y="68" font-size="8">DOCENTES 2025</text>
+                <text class="pv-value" x="28" y="92" font-size="20">838</text>
+                <text class="pv-delta" x="28" y="105" font-size="9">▲ +4.8%</text>
+              </g>
+              <g>
+                <rect class="pv-card" x="142" y="48" width="115" height="66" rx="8"/>
+                <text class="pv-label" x="154" y="68" font-size="8">COSTO TOTAL 2025</text>
+                <text class="pv-value" x="154" y="92" font-size="20">$16.7M</text>
+                <text class="pv-delta" x="154" y="105" font-size="9">▲ +1.9%</text>
+              </g>
+              <g>
+                <rect class="pv-card" x="268" y="48" width="116" height="66" rx="8"/>
+                <text class="pv-label" x="280" y="68" font-size="8">EN SUPERÁVIT</text>
+                <text class="pv-value" x="280" y="92" font-size="20">16 / 33</text>
+                <text class="pv-caption" x="280" y="105" font-size="9">carreras</text>
+              </g>
+
+              <rect class="pv-card" x="16" y="128" width="368" height="106" rx="8"/>
+              <line class="pv-axis" x1="34" y1="212" x2="368" y2="212"/>
+              <g>
+                <rect class="pv-bar" x="34" y="176" width="24" height="36" rx="2"/>
+                <rect class="pv-bar" x="68" y="160" width="24" height="52" rx="2"/>
+                <rect class="pv-bar-accent" x="102" y="148" width="24" height="64" rx="2"/>
+                <rect class="pv-bar" x="136" y="168" width="24" height="44" rx="2"/>
+                <rect class="pv-bar" x="170" y="184" width="24" height="28" rx="2"/>
+                <rect class="pv-bar-accent" x="204" y="152" width="24" height="60" rx="2"/>
+                <rect class="pv-bar" x="238" y="172" width="24" height="40" rx="2"/>
+                <rect class="pv-bar" x="272" y="192" width="24" height="20" rx="2"/>
+                <rect class="pv-bar" x="306" y="164" width="24" height="48" rx="2"/>
+                <rect class="pv-bar-accent" x="340" y="156" width="24" height="56" rx="2"/>
+              </g>
+            </svg>
+          </div>
           <p class="preview-caption">Vista previa del panel — usado para decisiones institucionales multi-facultad</p>
         </div>
       </div>
@@ -121,28 +180,36 @@
 
         <ul class="features-list">
           <li class="feature-item">
-            <span class="feature-icon" aria-hidden="true">📊</span>
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M12 20V4"/><path d="M20 20v-7"/><path d="M2 20h20"/></svg>
+            </span>
             <div>
               <h3>Métricas siempre actualizadas</h3>
               <p>Déficit, superávit y tendencias se recalculan al instante cada vez que se sube un archivo nuevo, no datos de hace meses.</p>
             </div>
           </li>
           <li class="feature-item">
-            <span class="feature-icon" aria-hidden="true">📥</span>
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4"/><path d="M7 8l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+            </span>
             <div>
               <h3>Carga el archivo base, no fórmulas</h3>
               <p>Sube el CSV o Excel del año y el sistema aplica la metodología por ti — se acabó el notebook manual.</p>
             </div>
           </li>
           <li class="feature-item">
-            <span class="feature-icon" aria-hidden="true">🤖</span>
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/></svg>
+            </span>
             <div>
               <h3>Pregúntale a tus datos</h3>
               <p>Resuelve dudas sobre déficit, MNI o tendencias en lenguaje natural, sin armar un reporte desde cero.</p>
             </div>
           </li>
           <li class="feature-item">
-            <span class="feature-icon" aria-hidden="true">🔒</span>
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+            </span>
             <div>
               <h3>Cada quien ve lo que le corresponde</h3>
               <p>Decanato ve su facultad; Rectorado ve el panorama institucional completo — sin configurar nada manualmente.</p>

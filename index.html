@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Académico — Gestión de costos institucionales</title>
+<meta name="description" content="Panel Académico: dashboards de costos institucionales con acceso por rol para Administradores, Rectorado, Decanato y Visitantes.">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Panel Académico — Gestión de costos institucionales">
+<meta property="og:description" content="Dashboards de costos institucionales con acceso diferenciado por rol para Administradores, Rectorado, Decanato y Visitantes.">
+<meta property="og:image" content="og-image.png">
+<!-- TODO: reemplazar por la URL real cuando el proyecto tenga dominio propio -->
+<meta property="og:url" content="https://panel-academico.example.edu/">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Panel Académico — Gestión de costos institucionales">
+<meta name="twitter:description" content="Dashboards de costos institucionales con acceso diferenciado por rol para Administradores, Rectorado, Decanato y Visitantes.">
+<meta name="twitter:image" content="og-image.png">
+
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <span class="logo">Panel Académico</span>
+
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="primaryNav"
+        aria-label="Abrir menú de navegación"
+      ><span></span></button>
+
+      <nav class="primary-nav" id="primaryNav" aria-label="Navegación principal">
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#caracteristicas">Características</a></li>
+          <li><a href="#solicitar-acceso">Solicitar acceso</a></li>
+        </ul>
+        <!-- TODO: reemplazar "#" por la ruta real de login cuando exista el backend de autenticación -->
+        <a class="nav-cta" href="#">Acceder</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <section class="hero section" id="inicio" aria-labelledby="hero-heading">
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <h1 id="hero-heading">Gestión de costos institucionales, con el acceso correcto para cada rol</h1>
+          <p>
+            Panel Académico centraliza los dashboards de costos de la universidad: carga de
+            datos, análisis por facultad y un panorama institucional completo, con acceso
+            diferenciado según quién esté mirando.
+          </p>
+          <!-- TODO: reemplazar "#" por la ruta real de login cuando exista el backend de autenticación -->
+          <a class="btn-primary" href="#">Iniciar sesión</a>
+        </div>
+
+        <div class="hero-preview">
+          <div class="preview-frame" role="img" aria-label="Vista previa ilustrativa del panel de control con gráficos de costos"></div>
+          <p class="preview-caption">Vista previa del panel — usado para decisiones institucionales multi-facultad</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="roles" aria-labelledby="roles-heading">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="roles-heading">Roles del sistema</h2>
+          <p>Qué puede hacer cada tipo de usuario</p>
+        </div>
+
+        <ol class="roles-list">
+          <li class="role-card">
+            <span class="role-num" aria-hidden="true">1</span>
+            <h3>Administrador</h3>
+            <p>Carga datos · Valida catálogo</p>
+          </li>
+          <li class="role-card">
+            <span class="role-num" aria-hidden="true">2</span>
+            <h3>Rectorado</h3>
+            <p>Panorama total · Todo el campus</p>
+          </li>
+          <li class="role-card">
+            <span class="role-num" aria-hidden="true">3</span>
+            <h3>Decanato</h3>
+            <p>Su facultad · Vista comparada</p>
+          </li>
+          <li class="role-card">
+            <span class="role-num" aria-hidden="true">4</span>
+            <h3>Visitante</h3>
+            <p>Vista limitada · Datos públicos</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="caracteristicas" aria-labelledby="features-heading">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="features-heading">Características</h2>
+          <p>Herramientas clave de la plataforma</p>
+        </div>
+
+        <ul class="features-list">
+          <li class="feature-item">
+            <span class="feature-icon" aria-hidden="true">📊</span>
+            <div>
+              <h3>Dashboards dinámicos</h3>
+              <p>Paneles por facultad</p>
+            </div>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon" aria-hidden="true">📥</span>
+            <div>
+              <h3>Carga de datos</h3>
+              <p>Formularios de carga</p>
+            </div>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon" aria-hidden="true">🤖</span>
+            <div>
+              <h3>Asistente con IA</h3>
+              <p>Preguntas sobre datos</p>
+            </div>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon" aria-hidden="true">🔒</span>
+            <div>
+              <h3>Seguridad por rol</h3>
+              <p>Acceso según facultad</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="solicitar-acceso" aria-labelledby="access-heading">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="access-heading">Solicitar acceso</h2>
+          <p>Completa tus datos y te contactaremos con tus credenciales</p>
+        </div>
+
+        <div class="access-panel">
+          <form class="access-form" id="access-form" novalidate>
+            <div class="form-field">
+              <label for="nombre">Nombre completo</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                autocomplete="name"
+                required
+                aria-required="true"
+                aria-describedby="nombre-error"
+              >
+              <p class="field-error" id="nombre-error" role="alert"></p>
+            </div>
+
+            <div class="form-field">
+              <label for="correo">Correo institucional</label>
+              <input
+                type="email"
+                id="correo"
+                name="correo"
+                autocomplete="email"
+                required
+                aria-required="true"
+                aria-describedby="correo-hint correo-error"
+              >
+              <p class="hint" id="correo-hint">Debe terminar en @universidadejemplo.edu</p>
+              <p class="field-error" id="correo-error" role="alert"></p>
+            </div>
+
+            <div class="form-field">
+              <label for="rol">Rol solicitado</label>
+              <select
+                id="rol"
+                name="rol"
+                required
+                aria-required="true"
+                aria-describedby="rol-error"
+              >
+                <option value="">Selecciona un rol…</option>
+                <option value="rectorado">Rectorado / Vicerrectorado</option>
+                <option value="decanato">Decanato</option>
+                <option value="visitante">Visitante</option>
+              </select>
+              <p class="field-error" id="rol-error" role="alert"></p>
+            </div>
+
+            <button type="submit" class="btn-primary">Enviar solicitud</button>
+            <p class="form-status" id="form-status" role="status"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span class="logo">Panel Académico</span>
+      <span>Proyecto integrador — Bootcamp Full Stack Developer</span>
+    </div>
+  </footer>
+
+  <script src="js/nav.js" defer></script>
+  <script src="js/form.js" defer></script>
+
+</body>
+</html>

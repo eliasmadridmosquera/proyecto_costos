@@ -1,0 +1,9 @@
+{
+  "name": "panel-academico-landing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page del proyecto integrador Panel Académico (Avance 2 - Bootcamp Full Stack Developer)",
+  "scripts": {
+    "build": "tsc"
+  }
+}

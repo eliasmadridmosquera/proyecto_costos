@@ -1,6 +1,6 @@
 "use strict";
 /** Validadores compartidos entre registro.html, iniciar-sesion.html y recuperar-clave.html. */
-const DOMINIO_INSTITUCIONAL = '@universidadejemplo.edu';
+const DOMINIO_INSTITUCIONAL = '@umeridiano.edu.ec';
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function validarCorreoInstitucional(valor) {
     const limpio = valor.trim();

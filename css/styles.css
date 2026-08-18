@@ -68,7 +68,7 @@ a{color:inherit;}
   display:flex; align-items:center; justify-content:space-between;
   padding:var(--space-4) var(--space-5); max-width:var(--maxw); margin:0 auto; gap:var(--space-4);
 }
-.logo{font-size:var(--text-md); font-weight:700; letter-spacing:-.2px; color:var(--color-primary);}
+.logo{font-size:var(--text-md); font-weight:700; letter-spacing:-.2px; color:var(--color-primary); text-decoration:none;}
 
 .menu-toggle{
   display:inline-flex; align-items:center; justify-content:center;
@@ -97,7 +97,8 @@ a{color:inherit;}
   font-size:var(--text-base); color:var(--text-muted); border-radius:var(--radius-sm);
 }
 .primary-nav a:hover{background:var(--surface-2); color:var(--text);}
-.primary-nav a.active{color:var(--color-primary); font-weight:700;}
+.primary-nav a.active,
+.primary-nav a[aria-current="page"]{color:var(--color-primary); font-weight:700;}
 .nav-cta{
   margin-top:var(--space-2); display:inline-block; text-align:center;
   background:var(--accent); color:var(--accent-contrast) !important;
@@ -191,18 +192,53 @@ a{color:inherit;}
   border:1px solid var(--border-strong); background:var(--surface);
 }
 .form-field input:focus,
-.form-field select:focus{outline:none; border-color:var(--focus-ring); box-shadow:0 0 0 3px rgba(55,138,221,.18);}
+.form-field select:focus{outline:none; border-color:var(--focus-ring); box-shadow:0 0 0 3px rgba(232,163,61,.25);}
 .form-field.is-invalid input,
 .form-field.is-invalid select{border-color:var(--error);}
 .field-error{
   margin:0; font-size:var(--text-xs); color:var(--error); min-height:1em;
 }
+.field-full{grid-column:1 / -1;}
+
+.form-checkbox{
+  display:flex; align-items:center; gap:var(--space-2);
+  font-size:var(--text-sm); color:var(--text-muted);
+}
+.form-checkbox input{width:16px; height:16px; accent-color:var(--color-primary);}
+
 .form-status{
   margin:0; font-size:var(--text-sm); border-radius:var(--radius-sm); padding:var(--space-3) var(--space-4);
   display:none;
 }
 .form-status.is-success{display:block; background:var(--success-bg); color:var(--success);}
 .form-status.is-error{display:block; background:var(--error-bg); color:var(--error);}
+
+/* ── Páginas de autenticación (login / registro / recuperar clave) ── */
+.auth-section{padding:var(--space-12) 0;}
+.auth-panel{
+  max-width:420px; margin:0 auto;
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg);
+  padding:var(--space-6); border-top:3px solid var(--color-primary);
+}
+.auth-panel .section-head{text-align:center; margin-bottom:var(--space-6);}
+.auth-panel .btn-primary{width:100%;}
+.auth-links{
+  margin:var(--space-5) 0 0; padding-top:var(--space-5); border-top:1px solid var(--border);
+  display:flex; flex-direction:column; gap:var(--space-2);
+  font-size:var(--text-sm); text-align:center;
+}
+.auth-links a{color:var(--color-primary); font-weight:600; text-decoration:none;}
+.auth-links a:hover{text-decoration:underline;}
+
+/* ── CTA de cierre ── */
+.cta-section{
+  background:var(--color-primary); color:#fff; padding:var(--space-10) 0; margin-top:var(--space-5);
+}
+.cta-inner{
+  text-align:center; display:flex; flex-direction:column; align-items:center; gap:var(--space-4);
+}
+.cta-inner h2{font-size:var(--text-lg); margin:0; font-weight:700;}
+.cta-inner p{font-size:var(--text-md); margin:0; color:rgba(255,255,255,.82); max-width:52ch;}
 
 /* ── Footer ── */
 .site-footer{
@@ -235,7 +271,6 @@ a{color:inherit;}
   .feature-item{border-bottom:1px solid var(--border);}
 
   .access-form{grid-template-columns:repeat(2, 1fr); align-items:start;}
-  .access-form .form-field:nth-child(3),
   .access-form .btn-primary,
   .access-form .form-status{grid-column:1 / -1;}
 }

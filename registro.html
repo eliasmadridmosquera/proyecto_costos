@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solicitar acceso — Panel Académico</title>
+<meta name="description" content="Solicita acceso a Panel Académico. Un Webmaster revisará tu solicitud y te contactará con tus credenciales.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Solicitar acceso — Panel Académico">
+<meta property="og:description" content="Solicita acceso a Panel Académico. Un Webmaster revisará tu solicitud y te contactará con tus credenciales.">
+<meta property="og:image" content="og-image.png">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Solicitar acceso — Panel Académico">
+<meta name="twitter:image" content="og-image.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html">Panel Académico</a>
+
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="primaryNav"
+        aria-label="Abrir menú de navegación"
+      ><span></span></button>
+
+      <nav class="primary-nav" id="primaryNav" aria-label="Navegación principal">
+        <ul>
+          <li><a href="index.html#inicio">Inicio</a></li>
+          <li><a href="index.html#caracteristicas">Características</a></li>
+          <li><a href="registro.html" aria-current="page">Solicitar acceso</a></li>
+        </ul>
+        <a class="nav-cta" href="iniciar-sesion.html">Acceder</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="auth-section">
+      <div class="wrap">
+        <div class="auth-panel">
+          <div class="section-head">
+            <h1 id="access-heading">Solicitar acceso</h1>
+            <p>Completa tus datos. Un Webmaster revisará tu solicitud y te contactará con tus credenciales — esto no crea tu cuenta al instante.</p>
+          </div>
+
+          <form class="access-form" id="access-form" novalidate>
+            <div class="form-field">
+              <label for="nombre">Nombre completo</label>
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                autocomplete="name"
+                required
+                aria-required="true"
+                aria-describedby="nombre-error"
+              >
+              <p class="field-error" id="nombre-error" role="alert"></p>
+            </div>
+
+            <div class="form-field">
+              <label for="correo">Correo institucional</label>
+              <input
+                type="email"
+                id="correo"
+                name="correo"
+                autocomplete="email"
+                required
+                aria-required="true"
+                aria-describedby="correo-hint correo-error"
+              >
+              <p class="hint" id="correo-hint">Debe terminar en @universidadejemplo.edu</p>
+              <p class="field-error" id="correo-error" role="alert"></p>
+            </div>
+
+            <div class="form-field field-full">
+              <label for="rol">Rol solicitado</label>
+              <select
+                id="rol"
+                name="rol"
+                required
+                aria-required="true"
+                aria-describedby="rol-error"
+              >
+                <option value="">Selecciona un rol…</option>
+                <option value="rectorado">Rectorado / Vicerrectorado</option>
+                <option value="decanato">Decanato</option>
+                <option value="visitante">Visitante</option>
+              </select>
+              <p class="field-error" id="rol-error" role="alert"></p>
+            </div>
+
+            <button type="submit" class="btn-primary">Enviar solicitud</button>
+            <p class="form-status" id="form-status" role="status"></p>
+          </form>
+
+          <p class="auth-links">
+            <a href="iniciar-sesion.html">¿Ya tienes cuenta? Inicia sesión</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span class="logo">Panel Académico</span>
+      <span>Proyecto integrador — Bootcamp Full Stack Developer</span>
+    </div>
+  </footer>
+
+  <script src="js/nav.js" defer></script>
+  <script src="js/validators.js" defer></script>
+  <script src="js/form.js" defer></script>
+
+</body>
+</html>

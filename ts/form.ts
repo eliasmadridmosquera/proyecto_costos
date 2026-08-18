@@ -6,9 +6,6 @@ interface SolicitudAcceso {
 
 type CampoId = keyof SolicitudAcceso;
 
-const DOMINIO_INSTITUCIONAL = '@universidadejemplo.edu';
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 /** Validadores puros: solo reciben datos, nunca tocan el DOM. */
 const validadores: Record<CampoId, (valor: string) => string | null> = {
   nombre(valor) {
@@ -17,18 +14,9 @@ const validadores: Record<CampoId, (valor: string) => string | null> = {
     if (limpio.length < 3) return 'El nombre debe tener al menos 3 caracteres.';
     return null;
   },
-  correo(valor) {
-    const limpio = valor.trim();
-    if (limpio.length === 0) return 'Ingresa tu correo institucional.';
-    if (!EMAIL_PATTERN.test(limpio)) return 'El formato del correo no es válido.';
-    if (!limpio.toLowerCase().endsWith(DOMINIO_INSTITUCIONAL)) {
-      return `El correo debe terminar en ${DOMINIO_INSTITUCIONAL}.`;
-    }
-    return null;
-  },
+  correo: validarCorreoInstitucional,
   rol(valor) {
-    if (valor.trim().length === 0) return 'Selecciona el rol que solicitas.';
-    return null;
+    return validarRequerido(valor, 'Selecciona el rol que solicitas.');
   },
 };
 

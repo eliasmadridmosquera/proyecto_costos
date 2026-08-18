@@ -2,12 +2,16 @@
    Design tokens
    ══════════════════════════════════════════════════════════ */
 :root{
-  /* Color — identidad "azul pizarra + ámbar" */
+  color-scheme:light dark;
+
+  /* Color — identidad "azul pizarra + ámbar" (paleta clara) */
   --bg:#F7F6F2; --surface:#FCFCFB; --surface-2:#F1EFE8;
   --text:#2C2C2A; --text-muted:#52514E; --text-soft:#85847E;
   --border:rgba(11,11,11,.12); --border-strong:#5F5E5A;
 
-  --color-primary:#1E3A5F; --color-primary-tint:rgba(30,58,95,.08);
+  /* --color-primary: fondo de bloques (CTA, barra de rol) — se mantiene fijo entre temas.
+     --color-primary-text: mismo azul usado como texto/ícono — sí cambia en oscuro para contraste. */
+  --color-primary:#1E3A5F; --color-primary-text:#1E3A5F; --color-primary-tint:rgba(30,58,95,.08);
   --color-accent:#E8A33D; --color-accent-contrast:#1E3A5F;
 
   /* Alias usados por componentes existentes (CTAs = acento ámbar) */
@@ -35,6 +39,35 @@
 }
 
 /* ══════════════════════════════════════════════════════════
+   Modo oscuro — por defecto sigue la preferencia del sistema;
+   el botón de la cabecera guarda una elección manual en
+   localStorage que gana sobre esa preferencia en cualquier
+   dirección (data-theme="light" fuerza claro aunque el SO
+   pida oscuro, y viceversa).
+   ══════════════════════════════════════════════════════════ */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1620; --surface:#16202C; --surface-2:#1C2836;
+    --text:#ECEEF1; --text-muted:#A8B0BC; --text-soft:#6E7885;
+    --border:rgba(255,255,255,.10); --border-strong:#3A4552;
+    --color-primary-text:#86AEDD; --color-primary-tint:rgba(134,174,221,.15);
+    --success:#4ADE80; --success-bg:rgba(74,222,128,.14);
+    --error:#F87171; --error-bg:rgba(248,113,113,.14);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1620; --surface:#16202C; --surface-2:#1C2836;
+  --text:#ECEEF1; --text-muted:#A8B0BC; --text-soft:#6E7885;
+  --border:rgba(255,255,255,.10); --border-strong:#3A4552;
+  --color-primary-text:#86AEDD; --color-primary-tint:rgba(134,174,221,.15);
+  --success:#4ADE80; --success-bg:rgba(74,222,128,.14);
+  --error:#F87171; --error-bg:rgba(248,113,113,.14);
+  color-scheme:dark;
+}
+:root[data-theme="light"]{color-scheme:light;}
+
+/* ══════════════════════════════════════════════════════════
    Reset + base (Mobile first, <768px)
    ══════════════════════════════════════════════════════════ */
 *{box-sizing:border-box;}
@@ -42,6 +75,11 @@ html{scroll-behavior:smooth;}
 body{
   margin:0; background:var(--bg); color:var(--text); font-family:var(--font);
   line-height:var(--leading-base); font-size:var(--text-base);
+  transition:background-color .2s ease, color .2s ease;
+}
+.site-header, .role-card, .feature-icon, .access-panel, .auth-panel,
+.hero-preview, .form-field input, .form-field select, .site-footer{
+  transition:background-color .2s ease, color .2s ease, border-color .2s ease;
 }
 img,svg{max-width:100%; display:block;}
 a{color:inherit;}
@@ -69,10 +107,26 @@ a{color:inherit;}
   padding:var(--space-4) var(--space-5); max-width:var(--maxw); margin:0 auto; gap:var(--space-4);
 }
 .logo{
-  font-size:var(--text-md); font-weight:700; letter-spacing:-.2px; color:var(--color-primary); text-decoration:none;
+  font-size:var(--text-md); font-weight:700; letter-spacing:-.2px; color:var(--color-primary-text); text-decoration:none;
   display:inline-flex; align-items:center; gap:var(--space-2);
 }
 .logo-mark{width:1.6em; height:1.6em; flex-shrink:0;}
+
+.header-controls{display:flex; align-items:center; gap:var(--space-3);}
+
+.theme-toggle{
+  display:inline-flex; align-items:center; justify-content:center;
+  background:none; border:1px solid var(--border-strong); border-radius:var(--radius-sm);
+  width:40px; height:40px; cursor:pointer; color:var(--text); flex-shrink:0;
+}
+.theme-toggle svg{width:20px; height:20px;}
+.theme-toggle .icon-moon{display:none;}
+:root[data-theme="dark"] .theme-toggle .icon-sun{display:none;}
+:root[data-theme="dark"] .theme-toggle .icon-moon{display:block;}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .theme-toggle .icon-sun{display:none;}
+  :root:not([data-theme="light"]) .theme-toggle .icon-moon{display:block;}
+}
 
 .menu-toggle{
   display:inline-flex; align-items:center; justify-content:center;
@@ -102,7 +156,7 @@ a{color:inherit;}
 }
 .primary-nav a:hover{background:var(--surface-2); color:var(--text);}
 .primary-nav a.active,
-.primary-nav a[aria-current="page"]{color:var(--color-primary); font-weight:700;}
+.primary-nav a[aria-current="page"]{color:var(--color-primary-text); font-weight:700;}
 .nav-cta{
   margin-top:var(--space-2); display:inline-block; text-align:center;
   background:var(--accent); color:var(--accent-contrast) !important;
@@ -174,7 +228,7 @@ a{color:inherit;}
 .feature-icon{
   flex-shrink:0; width:38px; height:38px; border-radius:var(--radius);
   background:var(--color-primary-tint); border:1px solid var(--border);
-  display:flex; align-items:center; justify-content:center; color:var(--color-primary);
+  display:flex; align-items:center; justify-content:center; color:var(--color-primary-text);
 }
 .feature-icon svg{width:20px; height:20px;}
 .feature-item h3{font-size:var(--text-md); margin:0 0 3px; font-weight:600;}
@@ -211,7 +265,7 @@ a{color:inherit;}
   display:flex; align-items:center; gap:var(--space-2);
   font-size:var(--text-sm); color:var(--text-muted);
 }
-.form-checkbox input{width:16px; height:16px; accent-color:var(--color-primary);}
+.form-checkbox input{width:16px; height:16px; accent-color:var(--color-primary-text);}
 
 .form-status{
   margin:0; font-size:var(--text-sm); border-radius:var(--radius-sm); padding:var(--space-3) var(--space-4);
@@ -239,7 +293,7 @@ a{color:inherit;}
   display:flex; flex-direction:column; gap:var(--space-2);
   font-size:var(--text-sm); text-align:center;
 }
-.auth-links a{color:var(--color-primary); font-weight:600; text-decoration:none;}
+.auth-links a{color:var(--color-primary-text); font-weight:600; text-decoration:none;}
 .auth-links a:hover{text-decoration:underline;}
 
 /* ── CTA de cierre ── */
@@ -271,7 +325,7 @@ a{color:inherit;}
 }
 .footer-col ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:var(--space-2);}
 .footer-col a{color:var(--text-muted); text-decoration:none; font-size:var(--text-sm);}
-.footer-col a:hover{color:var(--color-primary); text-decoration:underline;}
+.footer-col a:hover{color:var(--color-primary-text); text-decoration:underline;}
 .footer-bottom{
   border-top:1px solid var(--border); padding:var(--space-4) 0;
   font-size:var(--text-xs); color:var(--text-soft);

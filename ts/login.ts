@@ -5,7 +5,13 @@ interface Credenciales {
 
 type CampoLogin = keyof Credenciales;
 
-const CORREO_ADMIN_DEMO = 'admin@umeridiano.edu.ec';
+const CORREOS_DEMO: Record<string, RolDemo> = {
+  'webmaster@umeridiano.edu.ec': 'webmaster',
+  'admin@umeridiano.edu.ec': 'admin',
+  'rectorado@umeridiano.edu.ec': 'rectorado',
+  'decanato@umeridiano.edu.ec': 'decanato',
+  'visitante@umeridiano.edu.ec': 'visitante',
+};
 
 const validadoresLogin: Record<CampoLogin, (valor: string) => string | null> = {
   correo: validarCorreoInstitucional,
@@ -86,10 +92,12 @@ function esInputElement(value: unknown): value is HTMLInputElement {
       return;
     }
 
-    if (datos.correo.trim().toLowerCase() === CORREO_ADMIN_DEMO) {
-      mostrarEstado('Credenciales válidas. Entrando al Panel de Administrador…', 'success');
+    const rolDemo = CORREOS_DEMO[datos.correo.trim().toLowerCase()];
+    if (rolDemo) {
+      guardarSesionDemo(rolDemo);
+      mostrarEstado('Credenciales válidas. Entrando…', 'success');
       window.setTimeout(() => {
-        window.location.href = 'importar.html';
+        window.location.href = destinoParaRol(rolDemo);
       }, 600);
       return;
     }

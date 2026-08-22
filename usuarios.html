@@ -11,8 +11,8 @@
   })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Importar datos — Panel Académico</title>
-<meta name="description" content="Panel de Administrador: sube el archivo base del período y el sistema recalcula las métricas automáticamente.">
+<title>Usuarios — Panel Académico</title>
+<meta name="description" content="Gestión de usuarios: asignación de rol y Facultad, solo para el rol Webmaster.">
 <meta name="robots" content="noindex">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,72 +56,29 @@
   </header>
 
   <main id="main-content">
-    <section class="importer-section">
+    <section class="panel-section">
       <div class="wrap">
         <div class="section-head">
-          <h1>Importar datos</h1>
-          <p>Sube el archivo base del período y el sistema recalcula las métricas automáticamente — sin fórmulas manuales.</p>
+          <h1>Usuarios</h1>
+          <p>Asigna rol y Facultad a cada cuenta, o desactívala — solo visible para el rol Webmaster.</p>
         </div>
 
-        <div class="importer-panel">
-          <form id="importer-form" novalidate>
-            <div class="importer-fields">
-              <div class="form-field">
-                <label for="anio">Año</label>
-                <select id="anio" name="anio" required aria-required="true" aria-describedby="anio-error">
-                  <option value="">Selecciona un año…</option>
-                  <option value="2023">2023</option>
-                  <option value="2024">2024</option>
-                  <option value="2025" selected>2025</option>
-                  <option value="2026">2026</option>
-                </select>
-                <p class="field-error" id="anio-error" role="alert"></p>
-              </div>
-
-              <div class="form-field">
-                <label for="categoria">Categoría de datos</label>
-                <select id="categoria" name="categoria" required aria-required="true" aria-describedby="categoria-error">
-                  <option value="">Selecciona una categoría…</option>
-                  <optgroup label="Nómina docente">
-                    <option value="nomina-tc">Tiempo completo</option>
-                    <option value="nomina-tp">Tiempo parcial</option>
-                  </optgroup>
-                  <optgroup label="Carga académica">
-                    <option value="carga-pregrado">Pregrado</option>
-                    <option value="carga-posgrado">Posgrado</option>
-                    <option value="carga-abiertos">Cursos abiertos</option>
-                    <option value="carga-ajustes">Ajustes</option>
-                  </optgroup>
-                </select>
-                <p class="field-error" id="categoria-error" role="alert"></p>
-              </div>
-            </div>
-
-            <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-describedby="dropzone-hint archivo-error" aria-label="Seleccionar o arrastrar archivo CSV">
-              <input type="file" id="fileInput" accept=".csv" class="sr-only" tabindex="-1" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="dropzone-icon"><path d="M12 15V4"/><path d="M7 8l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
-              <p class="dropzone-text">Arrastra y suelta tu archivo aquí, o haz clic para buscarlo</p>
-              <p class="dropzone-hint" id="dropzone-hint">Formato aceptado: CSV · Tamaño máximo 10 MB</p>
-            </div>
-            <p class="field-error" id="archivo-error" role="alert"></p>
-
-            <div class="preview-box" id="previewBox" hidden>
-              <div class="preview-head">
-                <span class="preview-filename" id="previewFilename"></span>
-                <span class="preview-rowcount" id="previewRowcount"></span>
-              </div>
-              <div class="table-scroll">
-                <table id="previewTable">
-                  <thead></thead>
-                  <tbody></tbody>
-                </table>
-              </div>
-            </div>
-
-            <button type="submit" class="btn-primary" id="submitBtn" disabled>Confirmar y procesar</button>
-            <p class="form-status" id="form-status" role="status"></p>
-          </form>
+        <div class="table-scroll-full">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Facultad</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody"></tbody>
+          </table>
         </div>
+        <p class="form-status" id="users-status" role="status"></p>
       </div>
     </section>
   </main>
@@ -180,7 +137,8 @@
 
   <script src="js/theme.js" defer></script>
   <script src="js/session.js" defer></script>
-  <script src="js/importar.js" defer></script>
+  <script src="js/usuarios.data.js" defer></script>
+  <script src="js/usuarios.js" defer></script>
 
 </body>
 </html>

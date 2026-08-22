@@ -1,0 +1,66 @@
+/* ══════════════════════════════════════════════════════════
+   Reset + base (Mobile first, <768px)
+   ══════════════════════════════════════════════════════════ */
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--bg); color:var(--text); font-family:var(--font);
+  line-height:var(--leading-base); font-size:var(--text-base);
+  transition:background-color .2s ease, color .2s ease;
+}
+.site-header, .role-card, .feature-icon, .access-panel, .auth-panel,
+.hero-preview, .form-field input, .form-field select, .site-footer{
+  transition:background-color .2s ease, color .2s ease, border-color .2s ease;
+}
+img,svg{max-width:100%; display:block;}
+a{color:inherit;}
+:focus-visible{outline:3px solid var(--focus-ring); outline-offset:2px;}
+
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 var(--space-5);}
+
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+
+/* Skip link (accesibilidad de teclado) */
+.skip-link{
+  position:absolute; left:var(--space-2); top:-48px; z-index:1000;
+  background:var(--accent); color:var(--accent-contrast);
+  padding:var(--space-3) var(--space-4); border-radius:var(--radius-sm);
+  text-decoration:none; font-size:var(--text-base);
+  transition:top .15s ease;
+}
+.skip-link:focus{top:var(--space-2);}
+
+/* ── Prosa (páginas legales / 404) — utilidad de tipografía de
+   contenido, no un componente ni una composición de una sola
+   página: se reutiliza en privacidad/términos/cookies/contacto/
+   centro-ayuda. ── */
+.prose{max-width:68ch;}
+.prose p{font-size:var(--text-base); color:var(--text-muted); margin:0 0 var(--space-4);}
+.prose h2{font-size:var(--text-md); margin:var(--space-6) 0 var(--space-2); font-weight:700;}
+
+/* ══════════════════════════════════════════════════════════
+   Animaciones de feedback (formulario + nav activo)
+   Deshabilitadas por defecto; solo se activan si el usuario
+   no pidió "reducir movimiento" en su sistema.
+   ══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: no-preference){
+  @keyframes form-status-in{
+    from{opacity:0; transform:translateY(6px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @keyframes field-shake{
+    10%, 90%{transform:translateX(-1px);}
+    20%, 80%{transform:translateX(2px);}
+    30%, 50%, 70%{transform:translateX(-4px);}
+    40%, 60%{transform:translateX(4px);}
+  }
+
+  .form-status.anim-in{animation:form-status-in .3s ease;}
+  .form-field.shake input,
+  .form-field.shake select{animation:field-shake .4s ease;}
+
+  .primary-nav a{transition:color .15s ease, background-color .15s ease;}
+}

@@ -1,5 +1,11 @@
 "use strict";
-const CORREO_ADMIN_DEMO = 'admin@umeridiano.edu.ec';
+const CORREOS_DEMO = {
+    'webmaster@umeridiano.edu.ec': 'webmaster',
+    'admin@umeridiano.edu.ec': 'admin',
+    'rectorado@umeridiano.edu.ec': 'rectorado',
+    'decanato@umeridiano.edu.ec': 'decanato',
+    'visitante@umeridiano.edu.ec': 'visitante',
+};
 const validadoresLogin = {
     correo: validarCorreoInstitucional,
     contrasena(valor) {
@@ -74,10 +80,12 @@ function esInputElement(value) {
                 getInput(primerInvalido)?.focus();
             return;
         }
-        if (datos.correo.trim().toLowerCase() === CORREO_ADMIN_DEMO) {
-            mostrarEstado('Credenciales válidas. Entrando al Panel de Administrador…', 'success');
+        const rolDemo = CORREOS_DEMO[datos.correo.trim().toLowerCase()];
+        if (rolDemo) {
+            guardarSesionDemo(rolDemo);
+            mostrarEstado('Credenciales válidas. Entrando…', 'success');
             window.setTimeout(() => {
-                window.location.href = 'importar.html';
+                window.location.href = destinoParaRol(rolDemo);
             }, 600);
             return;
         }

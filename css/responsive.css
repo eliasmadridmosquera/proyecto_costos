@@ -1,0 +1,53 @@
+/* ══════════════════════════════════════════════════════════
+   Teléfonos muy angostos (≤359px, ej. iPhone SE 1.ª gen.)
+   Única excepción max-width del archivo: a este ancho, el header
+   interno (logo + nav + chip de rol) no cabe en una sola fila ni
+   shrinkeando todo lo posible — el nombre del rol es el elemento
+   menos esencial (el rol ya se ve por la página/nav), así que se
+   oculta para liberar espacio y evitar overflow horizontal de la
+   página. "Cerrar sesión" y la nav interna se quedan visibles.
+   ══════════════════════════════════════════════════════════ */
+@media (max-width:359px){
+  .user-chip-name{display:none;}
+}
+
+/* ══════════════════════════════════════════════════════════
+   Tablet (≥768px)
+   ══════════════════════════════════════════════════════════ */
+@media (min-width:768px){
+  .menu-toggle{display:none;}
+  .primary-nav{
+    position:static; display:flex; flex-direction:row; align-items:center;
+    border:none; padding:0; background:none; gap:var(--space-5); flex:1; justify-content:flex-end;
+  }
+  .primary-nav ul{flex-direction:row; align-items:center; gap:var(--space-1);}
+  .primary-nav a{padding:var(--space-2) var(--space-3);}
+  .nav-cta{margin-top:0; margin-left:var(--space-2);}
+
+  .roles-list{grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));}
+  .footer-grid{grid-template-columns:2fr 1fr 1fr 1fr;}
+  .features-list{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:0 var(--space-6); border-top:none;
+  }
+  .feature-item{border-bottom:1px solid var(--border);}
+
+  .access-form{grid-template-columns:repeat(2, 1fr); align-items:start;}
+  .access-form .btn-primary,
+  .access-form .form-status{grid-column:1 / -1;}
+
+  .importer-fields{grid-template-columns:repeat(2, 1fr);}
+
+  .stat-grid{grid-template-columns:repeat(3, 1fr);}
+}
+
+/* ══════════════════════════════════════════════════════════
+   Desktop (≥1024px)
+   ══════════════════════════════════════════════════════════ */
+@media (min-width:1024px){
+  .hero-inner{flex-direction:row; align-items:center; gap:var(--space-12);}
+  .hero-copy{flex:1;}
+  .hero-preview{flex:1;}
+  .hero-copy h1{font-size:var(--text-2xl);}
+
+  .roles-list{grid-template-columns:repeat(5, 1fr);}
+}

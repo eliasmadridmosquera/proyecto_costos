@@ -109,7 +109,10 @@ function esInputOSelect(value: unknown): value is HTMLInputElement | HTMLSelectE
     }
 
     if (submitBtn instanceof HTMLButtonElement) submitBtn.disabled = true;
-    mostrarEstado(`Solicitud enviada. Te contactaremos a ${datos.correo}.`, 'success');
+    mostrarEstado(
+      `Solicitud enviada. Un Webmaster la revisará y te contactará a ${datos.correo} con tus credenciales.`,
+      'success'
+    );
     form.reset();
     campos.forEach((campo) => mostrarError(campo, null));
     if (submitBtn instanceof HTMLButtonElement) submitBtn.disabled = false;

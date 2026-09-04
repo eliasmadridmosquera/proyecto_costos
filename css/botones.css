@@ -1,0 +1,101 @@
+.c-btn {
+    /* Reset de apariencia nativa — base compartida por las 4 variantes,
+       ninguna hereda el look por defecto del navegador. */
+    appearance: none;
+    -webkit-appearance: none;
+    font: inherit;
+    font-family: var(--font);
+    font-size: var(--text-base);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color .15s ease, border-color .15s ease, opacity .15s ease, transform .05s ease;
+}
+.c-btn:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+}
+.c-btn:disabled {
+    cursor: not-allowed;
+    opacity: .5;
+    transform: none;
+}
+
+/* Primario — misma acción destacada que .btn-primary en components.css,
+   reescrito aquí para que .c-btn sea un sistema autocontenido. */
+.c-btn--primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-contrast);
+}
+.c-btn--primary:hover:not(:disabled) {
+    opacity: .88;
+}
+.c-btn--primary:active:not(:disabled) {
+    opacity: .78;
+    transform: translateY(1px);
+}
+
+/* Secundario */
+.c-btn--secondary {
+    background: var(--surface);
+    border-color: var(--border-strong);
+    color: var(--text);
+}
+.c-btn--secondary:hover:not(:disabled) {
+    background: var(--surface-2);
+}
+.c-btn--secondary:active:not(:disabled) {
+    background: var(--surface-2);
+    transform: translateY(1px);
+}
+
+/* Destructivo */
+.c-btn--destructive {
+    background: var(--error);
+    border-color: var(--error);
+    color: #fff;
+}
+.c-btn--destructive:hover:not(:disabled) {
+    opacity: .88;
+}
+.c-btn--destructive:active:not(:disabled) {
+    opacity: .78;
+    transform: translateY(1px);
+}
+
+/* Icon button — solo ícono, sin relleno hasta el hover */
+.c-btn--icon {
+    background: transparent;
+    border-color: transparent;
+    color: var(--text-muted);
+    padding: var(--space-2);
+    width: 36px;
+    height: 36px;
+}
+.c-btn--icon:hover:not(:disabled) {
+    background: var(--surface-2);
+    color: var(--text);
+}
+.c-btn--icon:active:not(:disabled) {
+    background: var(--surface-2);
+    color: var(--text);
+    transform: translateY(1px) scale(.94);
+}
+
+@media (max-width: 480px) {
+    .c-btn {
+        width: 100%;
+    }
+    .c-btn--icon {
+        width: 36px;
+    }
+}
+
+@media (max-width: 768px) { }

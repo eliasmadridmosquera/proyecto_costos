@@ -17,6 +17,8 @@
   /* Alias usados por componentes existentes (CTAs = acento ámbar) */
   --accent:var(--color-accent); --accent-contrast:var(--color-accent-contrast);
 
+  --alert:#f59e0b; --alert-bg:#FDF3E7;
+  --info:#3b82f6; --info-bg:#EAF2FE;
   --success:#2E7D46; --success-bg:#EAF5EE;
   --error:#B3261E; --error-bg:#FBEAE9;
   /* Navy en claro (el ámbar da ~2:1 contra fondos claros, bajo el 3:1 de WCAG
@@ -37,6 +39,12 @@
   --text-lg:20px; --text-xl:28px; --text-2xl:34px;
   --leading-tight:1.2; --leading-base:1.5;
 
+  /* Semantic colors */
+  --semantic-error: var(--error);
+  --semantic-success: var(--success);
+  --semantic-warning:var(--alert);
+  --semantic-info:var(--info);
+
   --maxw:1200px;
 }
 
@@ -55,6 +63,8 @@
     --color-primary-text:#86AEDD; --color-primary-tint:rgba(134,174,221,.15);
     --success:#4ADE80; --success-bg:rgba(74,222,128,.14);
     --error:#F87171; --error-bg:rgba(248,113,113,.14);
+    --alert:#FBBF24; --alert-bg:rgba(251,191,36,.14);
+    --info:#60A5FA; --info-bg:rgba(96,165,250,.14);
     --focus-ring:var(--color-accent);
     color-scheme:dark;
   }
@@ -66,6 +76,8 @@
   --color-primary-text:#86AEDD; --color-primary-tint:rgba(134,174,221,.15);
   --success:#4ADE80; --success-bg:rgba(74,222,128,.14);
   --error:#F87171; --error-bg:rgba(248,113,113,.14);
+  --alert:#FBBF24; --alert-bg:rgba(251,191,36,.14);
+  --info:#60A5FA; --info-bg:rgba(96,165,250,.14);
   --focus-ring:var(--color-accent);
   color-scheme:dark;
 }

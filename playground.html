@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<script>
+  (function(){
+    try{
+      var t=localStorage.getItem('panelacademico-theme');
+      if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+    }catch(e){}
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playground de componentes — Panel Académico</title>
+<meta name="description" content="Backoffice: componentes de interacción reutilizables (alerts, botones, checkboxes/radios, dialogs, menús, toasts) con su comportamiento de teclado y foco documentado.">
+<meta name="robots" content="noindex">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzFFM0E1RiIvPjxyZWN0IHg9IjUiIHk9IjUiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjMiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9Ii45NSIvPjxyZWN0IHg9IjE3IiB5PSI1IiB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHJ4PSIzIiBmaWxsPSIjRThBMzNEIi8+PHJlY3QgeD0iNSIgeT0iMTciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjMiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjE3IiB5PSIxNyIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIiByeD0iMyIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iLjc1Ii8+PC9zdmc+Cg==">
+<link rel="stylesheet" href="css/styles.css">
+
+<style>
+  .pg-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    align-items: start;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .pg-aside {
+    position: sticky;
+    top: 1.5rem;
+  }
+
+  .pg-aside nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .pg-main {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    min-width: 0;
+  }
+
+  .pg-section {
+    scroll-margin-top: 1.5rem;
+  }
+
+  .pg-section-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+    margin-top: 1rem;
+  }
+
+  .pg-demo {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .pg-behavior {
+    min-width: 0;
+  }
+
+  @media (max-width: 768px) {
+    .pg-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .pg-aside {
+      position: static;
+    }
+
+    .pg-section-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <a class="skip-link" href="#pg-main-content">Saltar al contenido principal</a>
+
+  <div class="pg-layout">
+    <aside class="pg-aside">
+      <nav aria-label="Componentes">
+        <ul>
+          <li><a href="#seccion-alerts">Alerts</a></li>
+          <li><a href="#seccion-botones">Botones</a></li>
+          <li><a href="#seccion-checkboxes-radios">Checkboxes/Radios</a></li>
+          <li><a href="#seccion-dialogs">Dialogs</a></li>
+          <li><a href="#seccion-menus">Menús</a></li>
+          <li><a href="#seccion-toasts">Toasts</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="pg-main" id="pg-main-content">
+      <h1>Playground de componentes</h1>
+      <p>Referencia interna del backoffice: el HTML real de cada componente de interacción junto con su comportamiento de teclado y foco.</p>
+
+      <section class="pg-section" id="seccion-alerts" aria-labelledby="titulo-alerts">
+        <h2 id="titulo-alerts">Alerts</h2>
+        <div class="pg-section-grid">
+          <div class="pg-demo">
+
+            <div class="c-alert c-alert--success" role="status">
+              <span class="c-alert-icon" aria-hidden="true">✓</span>
+              <p class="c-alert-message">Los cambios se guardaron correctamente.</p>
+              <button type="button" class="c-alert-close" aria-label="Cerrar alerta">✕</button>
+            </div>
+
+            <div class="c-alert c-alert--error" role="alert">
+              <span class="c-alert-icon" aria-hidden="true">✕</span>
+              <p class="c-alert-message">No se pudo completar la solicitud. Intenta de nuevo.</p>
+              <button type="button" class="c-alert-close" aria-label="Cerrar alerta">✕</button>
+            </div>
+
+            <div class="c-alert c-alert--warning" role="alert">
+              <span class="c-alert-icon" aria-hidden="true">⚠</span>
+              <p class="c-alert-message">Este período todavía no tiene datos importados.</p>
+              <button type="button" class="c-alert-close" aria-label="Cerrar alerta">✕</button>
+            </div>
+
+            <div class="c-alert c-alert--info" role="status">
+              <span class="c-alert-icon" aria-hidden="true">ℹ</span>
+              <p class="c-alert-message">Los montos se muestran en dólares constantes del período actual.</p>
+              <button type="button" class="c-alert-close" aria-label="Cerrar alerta">✕</button>
+            </div>
+
+          </div>
+          <div class="pg-behavior">
+            <p>No son interactivos por teclado: no reciben foco por sí mismos. El único elemento enfocable es el botón de cerrar (✕), un <code>&lt;button&gt;</code> nativo — Tab lo alcanza, Enter o Espacio lo activa y oculta la alerta.</p>
+            <p><code>role="alert"</code> (error, advertencia) fuerza un anuncio asertivo e inmediato del lector de pantalla, interrumpiendo lo que esté leyendo. <code>role="status"</code> (éxito, informativo) lo anuncia de forma educada, sin interrumpir.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="pg-section" id="seccion-botones" aria-labelledby="titulo-botones">
+        <h2 id="titulo-botones">Botones</h2>
+        <div class="pg-section-grid">
+          <div class="pg-demo">
+
+            <button type="button" class="c-btn c-btn--primary">Guardar</button>
+            <button type="button" class="c-btn c-btn--primary" disabled>Guardando…</button>
+            <button type="button" class="c-btn c-btn--secondary">Cancelar</button>
+            <button type="button" class="c-btn c-btn--secondary" disabled>Cancelar</button>
+            <button type="button" class="c-btn c-btn--destructive">Eliminar</button>
+            <button type="button" class="c-btn c-btn--destructive" disabled>Eliminar</button>
+            <button type="button" class="c-btn c-btn--icon" aria-label="Más opciones">
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="5" r="1.6" fill="currentColor"/>
+                <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+                <circle cx="12" cy="19" r="1.6" fill="currentColor"/>
+              </svg>
+            </button>
+            <button type="button" class="c-btn c-btn--icon" aria-label="Más opciones" disabled>
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+                <circle cx="12" cy="5" r="1.6" fill="currentColor"/>
+                <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+                <circle cx="12" cy="19" r="1.6" fill="currentColor"/>
+              </svg>
+            </button>
+
+          </div>
+          <div class="pg-behavior">
+            <p>Los cuatro son <code>&lt;button&gt;</code> nativos: Tab los alcanza y Enter o Espacio los activa, igual que un clic — no hace falta JavaScript adicional para eso.</p>
+            <p>El icon button no tiene texto visible, por eso lleva <code>aria-label="Más opciones"</code>: sin ese atributo, un lector de pantalla no anunciaría nada útil al enfocarlo.</p>
+            <p>Junto a cada variante hay un ejemplo con <code>disabled</code>: <code>:hover</code>/<code>:active</code> quedan anulados y el cursor cambia a "no permitido" — el estado se distingue sin necesidad de leer el texto.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="pg-section" id="seccion-checkboxes-radios" aria-labelledby="titulo-checkboxes-radios">
+        <h2 id="titulo-checkboxes-radios">Checkboxes/Radios</h2>
+        <div class="pg-section-grid">
+          <div class="pg-demo">
+
+            <fieldset class="c-check-group">
+              <legend>Filtrar tabla por estado</legend>
+              <div class="c-check">
+                <input type="checkbox" id="pgCheckActivos" name="pgFiltroEstado" value="activos">
+                <label for="pgCheckActivos">Activos</label>
+              </div>
+              <div class="c-check">
+                <input type="checkbox" id="pgCheckPendientes" name="pgFiltroEstado" value="pendientes">
+                <label for="pgCheckPendientes">Pendientes</label>
+              </div>
+              <div class="c-check">
+                <input type="checkbox" id="pgCheckArchivados" name="pgFiltroEstado" value="archivados">
+                <label for="pgCheckArchivados">Archivados</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="c-radio-group">
+              <legend>Ordenar por</legend>
+              <div class="c-radio">
+                <input type="radio" id="pgOrdenNombre" name="pgOrden" value="nombre" checked>
+                <label for="pgOrdenNombre">Nombre</label>
+              </div>
+              <div class="c-radio">
+                <input type="radio" id="pgOrdenFecha" name="pgOrden" value="fecha">
+                <label for="pgOrdenFecha">Fecha</label>
+              </div>
+              <div class="c-radio">
+                <input type="radio" id="pgOrdenCosto" name="pgOrden" value="costo">
+                <label for="pgOrdenCosto">Costo</label>
+              </div>
+            </fieldset>
+
+          </div>
+          <div class="pg-behavior">
+            <p>Tab mueve el foco al grupo. Dentro de un grupo de radios, las flechas ↑/↓ o ←/→ mueven la selección entre las opciones — comportamiento nativo del navegador, sin JavaScript. Espacio marca o desmarca un checkbox enfocado.</p>
+            <p>El <code>&lt;legend&gt;</code> se anuncia como el nombre del grupo antes de cada opción, así que cada opción no repite el contexto ("filtrar por estado: activos" en vez de solo "activos").</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="pg-section" id="seccion-dialogs" aria-labelledby="titulo-dialogs">
+        <h2 id="titulo-dialogs">Dialogs</h2>
+        <div class="pg-section-grid">
+          <div class="pg-demo">
+
+            <button type="button" class="c-btn c-btn--destructive" id="pgDialogTrigger" aria-haspopup="dialog">Eliminar recurso</button>
+
+            <dialog class="c-dialog" id="pgConfirmDialog" aria-labelledby="pgDialogTitle">
+              <h2 class="c-dialog-title" id="pgDialogTitle">¿Eliminar este recurso?</h2>
+              <p>Esta acción no se puede deshacer.</p>
+              <div class="c-dialog-actions">
+                <button type="button" class="c-btn c-btn--secondary" id="pgDialogCancel">Cancelar</button>
+                <button type="button" class="c-btn c-btn--destructive" id="pgDialogConfirm">Eliminar</button>
+              </div>
+            </dialog>
+
+          </div>
+          <div class="pg-behavior">
+            <p>Enter o Espacio en "Eliminar recurso" abre el diálogo con <code>.showModal()</code>. Mientras está abierto, el foco queda atrapado dentro (comportamiento nativo de <code>&lt;dialog&gt;</code> en modo modal) y se posiciona en el primer elemento enfocable.</p>
+            <p>Escape lo cierra (dispara el evento nativo <code>cancel</code>). Al cerrarse — por Escape o por cualquiera de los dos botones — el foco vuelve exactamente al botón "Eliminar recurso" que lo abrió.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="pg-section" id="seccion-menus" aria-labelledby="titulo-menus">
+        <h2 id="titulo-menus">Menús</h2>
+        <div class="pg-section-grid">
+          <div class="pg-demo">
+
+            <div class="c-menu">
+              <button type="button" class="c-btn c-btn--secondary c-menu-account-toggle" id="pgMenuAccountToggle" aria-haspopup="true" aria-expanded="false" aria-controls="pgMenuAccountList">Cuenta ▾</button>
+              <ul class="c-menu-account" id="pgMenuAccountList" role="menu" aria-labelledby="pgMenuAccountToggle" hidden>
+                <li role="none"><a role="menuitem" href="#">Perfil</a></li>
+                <li role="none"><a role="menuitem" href="#">Configuración</a></li>
+                <li role="none"><button type="button" role="menuitem">Cerrar sesión</button></li>
+              </ul>
+            </div>
+
+            <div class="c-menu">
+              <button type="button" class="c-btn c-btn--icon c-menu-account-toggle" id="pgMenuIconToggle" aria-haspopup="true" aria-expanded="false" aria-controls="pgMenuIconList" aria-label="Más opciones">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+                  <circle cx="12" cy="5" r="1.6" fill="currentColor"/>
+                  <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+                  <circle cx="12" cy="19" r="1.6" fill="currentColor"/>
+                </svg>
+              </button>
+              <ul class="c-menu-account" id="pgMenuIconList" role="menu" aria-labelledby="pgMenuIconToggle" hidden>
+                <li role="none"><a role="menuitem" href="#">Perfil</a></li>
+                <li role="none"><a role="menuitem" href="#">Configuración</a></li>
+                <li role="none"><button type="button" role="menuitem">Cerrar sesión</button></li>
+              </ul>
+            </div>
+
+          </div>
+          <div class="pg-behavior">
+            <p>Clic, Enter o Espacio en el trigger abre el desplegable y cambia <code>aria-expanded</code> a <code>"true"</code>. Escape lo cierra y devuelve el foco al trigger.</p>
+            <p>Un clic afuera del menú también lo cierra, sin mover el foco — el usuario ya dirigió su atención a otro punto de la página.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="pg-section" id="seccion-toasts" aria-labelledby="titulo-toasts">
+        <h2 id="titulo-toasts">Toasts</h2>
+        <div class="pg-section-grid">
+          <div class="pg-demo">
+
+            <button type="button" class="c-btn c-btn--primary" id="pgToastShowSuccess">Mostrar toast de éxito</button>
+            <button type="button" class="c-btn c-btn--secondary" id="pgToastShowError">Mostrar toast de error</button>
+
+            <div class="c-toast-container" id="pgToastContainer" aria-live="polite">
+              <div class="c-toast c-toast--success">Los cambios se guardaron correctamente.</div>
+              <div class="c-toast c-toast--error">No se pudo completar la solicitud. Intenta de nuevo.</div>
+            </div>
+
+          </div>
+          <div class="pg-behavior">
+            <p>No son interactivos por teclado ni reciben foco: no atrapan ni desvían la atención de lo que el usuario esté haciendo en ese momento.</p>
+            <p>Se anuncian solos mediante <code>aria-live="polite"</code> en el contenedor, que hace que un lector de pantalla lea el mensaje nuevo sin mover el foco. Desaparecen automáticamente pasado un tiempo; si hay más de 3 visibles, el más antiguo se retira primero.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="js/theme.js" defer></script>
+  <script src="js/playground.js" defer></script>
+</body>
+</html>

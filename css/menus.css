@@ -1,0 +1,65 @@
+.c-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.c-menu-account-toggle[aria-expanded="true"] {
+    background: var(--surface-2);
+}
+
+.c-menu-account {
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    left: 0;
+    z-index: 20;
+    min-width: 180px;
+    margin: 0;
+    padding: var(--space-2);
+    list-style: none;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);
+}
+
+.c-menu-account li {
+    margin: 0;
+}
+
+.c-menu-account a[role="menuitem"],
+.c-menu-account button[role="menuitem"] {
+    appearance: none;
+    -webkit-appearance: none;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    border: none;
+    border-radius: var(--radius-sm);
+    background: none;
+    font: inherit;
+    font-family: var(--font);
+    font-size: var(--text-sm);
+    color: var(--text);
+    text-decoration: none;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color .15s ease;
+}
+.c-menu-account a[role="menuitem"]:hover,
+.c-menu-account button[role="menuitem"]:hover {
+    background: var(--surface-2);
+}
+.c-menu-account a[role="menuitem"]:focus-visible,
+.c-menu-account button[role="menuitem"]:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: -2px;
+}
+
+@media (max-width: 480px) {
+    .c-menu-account {
+        min-width: 160px;
+    }
+}
+
+@media (max-width: 768px) { }

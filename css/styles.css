@@ -7,4 +7,12 @@
 @import url("./layout.css");
 @import url("./components.css");
 @import url("./pages.css");
+
+/*Componentes de interaccion del backoffice (playground)*/
+@import url("./alerts.css");
+@import url("./botones.css");
+@import url("./checkboxes-radios.css");
+@import url("./dialogs.css");
+@import url("./menus.css");
+@import url("./toasts.css");
 @import url("./responsive.css");

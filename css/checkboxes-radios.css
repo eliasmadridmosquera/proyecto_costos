@@ -1,0 +1,55 @@
+.c-check-group,
+.c-radio-group {
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    padding: var(--space-4) var(--space-4) var(--space-3);
+    margin: 0 0 var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.c-check-group legend,
+.c-radio-group legend {
+    padding: 0 var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text);
+}
+
+.c-check,
+.c-radio {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.c-check input,
+.c-radio input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--color-primary);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.c-check input:focus-visible,
+.c-radio input:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+}
+
+.c-check label,
+.c-radio label {
+    font-size: var(--text-sm);
+    color: var(--text);
+    cursor: pointer;
+}
+
+@media (max-width: 480px) {
+    .c-check-group,
+    .c-radio-group {
+        padding: var(--space-3) var(--space-3) var(--space-2);
+    }
+}
+
+@media (max-width: 768px) { }

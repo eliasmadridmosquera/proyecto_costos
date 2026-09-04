@@ -1,0 +1,98 @@
+.c-alert {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--space-3);
+    border-radius: var(--radius);
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-sm);
+    line-height: var(--leading-base);
+    transition: background-color .2s ease, border-color .2s ease;
+}
+
+.c-alert--success{
+    border: 1px solid var(--semantic-success);
+    background: var(--success-bg);
+}
+.c-alert--error{
+    border: 1px solid var(--semantic-error);
+    background: var(--error-bg);
+}
+.c-alert--warning{
+    border: 1px solid var(--semantic-warning);
+    background: var(--alert-bg);
+}
+.c-alert--info{
+    border: 1px solid var(--semantic-info);
+    background: var(--info-bg);
+}
+
+.c-alert-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    font-size: var(--text-md);
+    line-height: 1;
+}
+.c-alert-message {
+    flex: 1;
+    margin: 0;
+    color: var(--text);
+}
+.c-alert-close {
+    /* Reset de apariencia nativa: sin este bloque el botón hereda el
+       borde/fondo por defecto del navegador — lo pide el criterio de
+       aceptación explícitamente. */
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-sm);
+    font: inherit;
+    font-size: var(--text-sm);
+    line-height: 1;
+    color: var(--text-soft);
+    cursor: pointer;
+    transition: background-color .15s ease, color .15s ease;
+}
+.c-alert-close:hover {
+    background: var(--surface-2);
+    color: var(--text);
+}
+.c-alert-close:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+}
+
+.c-alert--success .c-alert-icon{
+    color: var(--semantic-success);
+ }
+.c-alert--error .c-alert-icon{
+    color: var(--semantic-error);
+ }
+.c-alert--warning .c-alert-icon{
+    color: var(--semantic-warning);
+ }
+.c-alert--info .c-alert-icon{
+    color: var(--semantic-info);
+ }
+
+@media (max-width: 480px) {
+    .c-alert {
+        gap: var(--space-2);
+        padding: var(--space-3);
+    }
+}
+
+@media (max-width: 768px) { }

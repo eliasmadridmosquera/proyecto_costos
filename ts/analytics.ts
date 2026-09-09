@@ -2,6 +2,7 @@
  * cada página) — TypeScript no lo conoce sin esta declaración ambiental. */
 interface MixpanelGlobal {
   track(evento: string, propiedades?: Record<string, unknown>): void;
+  identify(id: string): void;
 }
 
 declare const mixpanel: MixpanelGlobal;

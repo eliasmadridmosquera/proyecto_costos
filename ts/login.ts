@@ -95,6 +95,7 @@ function esInputElement(value: unknown): value is HTMLInputElement {
     const rolDemo = CORREOS_DEMO[datos.correo.trim().toLowerCase()];
     if (rolDemo) {
       guardarSesionDemo(rolDemo);
+      mixpanel.identify(datos.correo.trim().toLowerCase());
       mostrarEstado('Credenciales válidas. Entrando…', 'success');
       window.setTimeout(() => {
         window.location.href = destinoParaRol(rolDemo);

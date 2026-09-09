@@ -1,5 +1,6 @@
 "use strict";
 (function initPaneles() {
+    const inicioCarga = performance.now();
     const sesionActual = leerSesionDemo();
     if (!sesionActual)
         return; // session.ts ya redirige a iniciar-sesion.html
@@ -205,8 +206,23 @@
             return;
         }
         const categoria = PANELES.find((p) => p.id === id);
-        if (categoria)
-            bodyElemento.innerHTML = renderizarDashboard(categoria);
+        if (!categoria)
+            return;
+        const inicioRender = performance.now();
+        bodyElemento.innerHTML = renderizarDashboard(categoria);
+        const renderTimeMs = Math.round(performance.now() - inicioRender);
+        trackEvento('analysis_visualization_rendered', {
+            user_role: sesion.rol,
+            visualization_type: 'data_table',
+            render_time_ms: renderTimeMs,
+            rendered_at: new Date().toISOString(),
+        });
+        trackEvento('faculty_filter_applied', {
+            user_role: sesion.rol,
+            faculty_count_selected: filasVisibles(categoria).length,
+            analysis_context: categoria.id,
+            event_at: new Date().toISOString(),
+        });
     }
     tabsElemento.innerHTML = tabs
         .map((t) => `<button type="button" class="panel-tab" role="tab" aria-selected="false" data-tab="${t.id}">${t.label}</button>`)
@@ -219,5 +235,11 @@
         });
     });
     activarTab(PANELES[0].id);
+    trackEvento('dashboard_loaded', {
+        user_role: sesion.rol,
+        dashboard_type: sesion.rol === 'decanato' ? 'faculty_overview' : 'institution_overview',
+        load_time_ms: Math.round(performance.now() - inicioCarga),
+        loaded_at: new Date().toISOString(),
+    });
 })();
 //# sourceMappingURL=paneles.js.map

@@ -113,6 +113,11 @@ function esInputOSelect(value: unknown): value is HTMLInputElement | HTMLSelectE
       `Solicitud enviada. Un Webmaster la revisará y te contactará a ${datos.correo} con tus credenciales.`,
       'success'
     );
+    trackEvento('account_created', {
+      user_role: datos.rol,
+      signup_source: 'access_form',
+      created_at: new Date().toISOString(),
+    });
     form.reset();
     campos.forEach((campo) => mostrarError(campo, null));
     if (submitBtn instanceof HTMLButtonElement) submitBtn.disabled = false;

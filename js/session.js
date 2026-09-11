@@ -97,7 +97,10 @@ function destinoParaRol(rol) {
             .join('');
     }
     if (logout) {
-        logout.addEventListener('click', () => cerrarSesionDemo());
+        logout.addEventListener('click', () => {
+            trackEvento('logout', { user_role: sesion.rol });
+            cerrarSesionDemo();
+        });
     }
 })();
 //# sourceMappingURL=session.js.map

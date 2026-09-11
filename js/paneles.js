@@ -128,6 +128,21 @@
             texto: `Demo — respuestas precargadas sobre los datos de ${CATEGORIA_CHAT.titulo}. El asistente real se conecta a la API del backend (ver plan.md).`,
         },
     ];
+    /** Mismo criterio de match que responderPregunta, expuesto aparte para
+     * poder trackear si la pregunta cayó en una respuesta precargada o en el
+     * mensaje genérico de fallback. */
+    function temaPregunta(pregunta) {
+        const q = pregunta.toLowerCase();
+        if (q.includes('déficit') || q.includes('deficit'))
+            return 'deficit';
+        if (q.includes('superávit') || q.includes('superavit'))
+            return 'superavit';
+        if (q.includes('tendencia'))
+            return 'tendencia';
+        if (q.includes('costo') || q.includes('total'))
+            return 'costo';
+        return 'sin_match';
+    }
     function responderPregunta(pregunta) {
         const q = pregunta.toLowerCase();
         if (q.includes('déficit') || q.includes('deficit')) {
@@ -185,6 +200,11 @@
                 return;
             mensajesChat.push({ autor: 'user', texto: pregunta });
             mensajesChat.push({ autor: 'bot', texto: responderPregunta(pregunta) });
+            trackEvento('ai_assistant_question_asked', {
+                user_role: sesion.rol,
+                question_length: pregunta.length,
+                matched_topic: temaPregunta(pregunta),
+            });
             pintarMensajes(mensajesEl);
             input.value = '';
             input.focus();
@@ -211,17 +231,11 @@
         const inicioRender = performance.now();
         bodyElemento.innerHTML = renderizarDashboard(categoria);
         const renderTimeMs = Math.round(performance.now() - inicioRender);
-        trackEvento('analysis_visualization_rendered', {
+        trackEvento('dashboard_category_viewed', {
             user_role: sesion.rol,
-            visualization_type: 'data_table',
-            render_time_ms: renderTimeMs,
-            rendered_at: new Date().toISOString(),
-        });
-        trackEvento('faculty_filter_applied', {
-            user_role: sesion.rol,
-            faculty_count_selected: filasVisibles(categoria).length,
             analysis_context: categoria.id,
-            event_at: new Date().toISOString(),
+            faculty_count_selected: filasVisibles(categoria).length,
+            render_time_ms: renderTimeMs,
         });
     }
     tabsElemento.innerHTML = tabs
@@ -239,7 +253,6 @@
         user_role: sesion.rol,
         dashboard_type: sesion.rol === 'decanato' ? 'faculty_overview' : 'institution_overview',
         load_time_ms: Math.round(performance.now() - inicioCarga),
-        loaded_at: new Date().toISOString(),
     });
 })();
 //# sourceMappingURL=paneles.js.map

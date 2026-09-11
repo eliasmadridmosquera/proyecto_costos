@@ -7,6 +7,8 @@ interface MixpanelGlobal {
 
 declare const mixpanel: MixpanelGlobal;
 
+/** occurred_at se agrega acá una sola vez — antes cada evento inventaba su
+ * propio nombre de timestamp (created_at, started_at, event_at...). */
 function trackEvento(evento: string, propiedades: Record<string, unknown>): void {
-  mixpanel.track(evento, propiedades);
+  mixpanel.track(evento, { ...propiedades, occurred_at: new Date().toISOString() });
 }

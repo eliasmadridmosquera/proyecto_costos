@@ -113,11 +113,9 @@ function parsearCsv(texto) {
             dropzone.classList.add('has-file');
             renderizarVistaPrevia(archivoActual);
             actualizarBotonEnvio();
-            trackEvento('data_connection_started', {
+            trackEvento('csv_file_selected', {
                 user_role: sesion?.rol ?? null,
-                ingestion_path: 'CSV upload',
                 data_source_type: 'spreadsheet',
-                started_at: new Date().toISOString(),
             });
         };
         lector.onerror = () => {
@@ -180,14 +178,10 @@ function parsearCsv(texto) {
             submitBtn.textContent = 'Confirmar y procesar';
             actualizarBotonEnvio();
             mostrarEstado(`Se importaron ${archivoActual.totalFilas} filas. Métricas recalculadas para ${categoriaLabel} — ${anioSelect.value}.`, 'success');
-            trackEvento('data_ingestion_completed', {
+            trackEvento('csv_import_completed', {
                 user_role: sesion?.rol ?? null,
-                ingestion_path: 'CSV upload',
-                ingestion_job_id: `job_${Date.now()}`,
-                ingestion_status: 'success',
                 rows_imported: archivoActual.totalFilas,
                 category: categoriaLabel,
-                completed_at: new Date().toISOString(),
             });
         }, 700);
     });

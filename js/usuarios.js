@@ -7,6 +7,9 @@
         window.location.href = 'index.html';
         return;
     }
+    // Re-vinculado con tipo explícito: los nested functions de más abajo no
+    // heredan el angostamiento de tipo (narrowing) de las verificaciones de arriba.
+    const sesion = sesionActual;
     const elTbody = document.getElementById('usersTableBody');
     const status = document.getElementById('users-status');
     if (!(elTbody instanceof HTMLTableSectionElement))
@@ -111,6 +114,11 @@
                 usuario.rol = selectRol.value;
                 usuario.facultad = usuario.rol === 'Decanato' ? selectFacultad.value || null : null;
                 editandoId = null;
+                trackEvento('user_role_updated', {
+                    user_role: sesion.rol,
+                    updated_user_role: usuario.rol,
+                    updated_user_has_facultad: usuario.facultad !== null,
+                });
                 mostrarEstado(`Se actualizó a ${usuario.nombre}: ${usuario.rol}${usuario.facultad ? ` — ${usuario.facultad}` : ''}.`);
                 renderizarTabla();
             });

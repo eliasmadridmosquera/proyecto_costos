@@ -119,6 +119,9 @@ function destinoParaRol(rol: RolDemo): string {
   }
 
   if (logout) {
-    logout.addEventListener('click', () => cerrarSesionDemo());
+    logout.addEventListener('click', () => {
+      trackEvento('logout', { user_role: sesion.rol });
+      cerrarSesionDemo();
+    });
   }
 })();

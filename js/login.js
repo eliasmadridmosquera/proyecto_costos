@@ -84,6 +84,7 @@ function esInputElement(value) {
         if (rolDemo) {
             guardarSesionDemo(rolDemo);
             mixpanel.identify(datos.correo.trim().toLowerCase());
+            trackEvento('login_succeeded', { user_role: rolDemo });
             mostrarEstado('Credenciales válidas. Entrando…', 'success');
             window.setTimeout(() => {
                 window.location.href = destinoParaRol(rolDemo);

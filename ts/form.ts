@@ -116,7 +116,6 @@ function esInputOSelect(value: unknown): value is HTMLInputElement | HTMLSelectE
     trackEvento('account_created', {
       user_role: datos.rol,
       signup_source: 'access_form',
-      created_at: new Date().toISOString(),
     });
     form.reset();
     campos.forEach((campo) => mostrarError(campo, null));

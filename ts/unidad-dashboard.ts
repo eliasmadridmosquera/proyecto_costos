@@ -190,12 +190,22 @@ function crearGraficoBarras(canvas: HTMLCanvasElement, filas: FilaUnidad[]): Cha
 interface DefinicionVista {
   id: string;
   label: string;
+  datos: VistaUnidad;
   render: (contenedor: HTMLElement) => void;
 }
 
+/** Contexto que lee el asistente flotante (ts/asistente-flotante.ts) para
+ * responder sobre la unidad/vista que el usuario tiene abierta en ese
+ * momento — antes el chat vivía fijo a Docencia sin importar el tab. */
+interface ContextoAsistente {
+  unidad: string;
+  vista: VistaUnidad;
+}
+let contextoAsistente: ContextoAsistente | null = null;
+
 /** Tabs con roving tabindex + navegación por flechas — mismo patrón ya
  * probado en el antiguo paneles.ts, generalizado para cualquier unidad. */
-function initTabsUnidad(tabsElemento: HTMLElement, bodyElemento: HTMLElement, vistas: DefinicionVista[]): void {
+function initTabsUnidad(tabsElemento: HTMLElement, bodyElemento: HTMLElement, unidadLabel: string, vistas: DefinicionVista[]): void {
   function activarTab(id: string): void {
     tabsElemento.querySelectorAll('.panel-tab').forEach((btn) => {
       const esActiva = btn.getAttribute('data-tab') === id;
@@ -206,7 +216,10 @@ function initTabsUnidad(tabsElemento: HTMLElement, bodyElemento: HTMLElement, vi
     bodyElemento.setAttribute('aria-labelledby', `tab-${id}`);
 
     const vista = vistas.find((v) => v.id === id);
-    if (vista) vista.render(bodyElemento);
+    if (vista) {
+      vista.render(bodyElemento);
+      contextoAsistente = { unidad: unidadLabel, vista: vista.datos };
+    }
   }
 
   tabsElemento.innerHTML = vistas

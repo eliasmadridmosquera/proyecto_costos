@@ -137,9 +137,10 @@ function crearGraficoBarras(canvas, filas) {
         },
     });
 }
+let contextoAsistente = null;
 /** Tabs con roving tabindex + navegación por flechas — mismo patrón ya
  * probado en el antiguo paneles.ts, generalizado para cualquier unidad. */
-function initTabsUnidad(tabsElemento, bodyElemento, vistas) {
+function initTabsUnidad(tabsElemento, bodyElemento, unidadLabel, vistas) {
     function activarTab(id) {
         tabsElemento.querySelectorAll('.panel-tab').forEach((btn) => {
             const esActiva = btn.getAttribute('data-tab') === id;
@@ -149,8 +150,10 @@ function initTabsUnidad(tabsElemento, bodyElemento, vistas) {
         });
         bodyElemento.setAttribute('aria-labelledby', `tab-${id}`);
         const vista = vistas.find((v) => v.id === id);
-        if (vista)
+        if (vista) {
             vista.render(bodyElemento);
+            contextoAsistente = { unidad: unidadLabel, vista: vista.datos };
+        }
     }
     tabsElemento.innerHTML = vistas
         .map((v) => `<button type="button" id="tab-${v.id}" class="panel-tab" role="tab" aria-selected="false" aria-controls="panelBody" tabindex="-1" data-tab="${v.id}">${v.label}</button>`)

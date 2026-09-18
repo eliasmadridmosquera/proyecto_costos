@@ -257,3 +257,30 @@
   background:var(--surface);
 }
 .chat-input-row input:focus{outline:none; border-color:var(--focus-ring); box-shadow:0 0 0 3px rgba(232,163,61,.25);}
+
+/* ── Asistente flotante (dashboards de unidad) ── */
+.asistente-fab{
+  position:fixed; right:var(--space-6); bottom:var(--space-6); z-index:60;
+  width:56px; height:56px; border-radius:50%; border:none;
+  background:var(--accent); color:var(--accent-contrast);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,.2);
+  transition:transform .1s ease;
+}
+.asistente-fab:hover{transform:scale(1.05);}
+.asistente-fab:active{transform:scale(.95);}
+.asistente-fab svg{width:26px; height:26px;}
+@media (prefers-reduced-motion: no-preference){
+  .asistente-fab:not(.is-descubierto){animation:asistente-pulso 2s ease-in-out infinite;}
+}
+@keyframes asistente-pulso{
+  0%, 100%{box-shadow:0 4px 16px rgba(0,0,0,.2), 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);}
+  50%{box-shadow:0 4px 16px rgba(0,0,0,.2), 0 0 0 12px color-mix(in srgb, var(--accent) 0%, transparent);}
+}
+
+.asistente-panel{
+  position:fixed; right:var(--space-6); bottom:calc(var(--space-6) + 68px); z-index:60;
+  width:min(340px, calc(100vw - 2 * var(--space-6)));
+}
+.asistente-panel .chat-box{margin:0; max-width:none;}
+.asistente-hint{font-size:var(--text-xs); color:var(--text-soft); margin:0 0 var(--space-2);}

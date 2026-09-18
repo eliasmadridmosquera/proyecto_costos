@@ -75,10 +75,11 @@
   const vistas = VISTAS_DOCENCIA.map((vista) => ({
     id: vista.id,
     label: vista.titulo,
+    datos: vista,
     render: (contenedor: HTMLElement): void => renderVista(vista, contenedor),
   }));
 
-  initTabsUnidad(tabsElemento, bodyElemento, vistas);
+  initTabsUnidad(tabsElemento, bodyElemento, 'Docencia', vistas);
 
   trackEvento('dashboard_loaded', {
     user_role: sesion.rol,

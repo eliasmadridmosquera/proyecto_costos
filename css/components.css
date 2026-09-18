@@ -110,13 +110,71 @@
 /* ── Variante clickeable de .role-card (hub de unidades en paneles.html) —
    modificador aparte para no agregar affordance falsa a las tarjetas
    estáticas de index.html, que comparten la misma clase base. ── */
-.role-card--link{padding:0;}
+.role-card--link{padding:0; display:flex; flex-direction:column;}
 .role-card-link{
-  display:block; padding:var(--space-5); color:inherit; text-decoration:none;
+  flex:1; display:block; padding:var(--space-5); color:inherit; text-decoration:none;
   border-radius:inherit; transition:background-color .15s ease, transform .1s ease;
 }
 .role-card-link:hover{background:var(--surface-2);}
 .role-card-link:active{transform:scale(.98);}
+
+/* ── Íconos de unidad del hub (reemplazan al número en el círculo) — el
+   movimiento al hacer hover/foco tiene que ver con lo que representa cada
+   ícono, y se apaga con prefers-reduced-motion ── */
+.unit-icon{
+  display:block; width:60px; height:60px; margin-bottom:var(--space-3);
+  color:var(--color-primary-text);
+}
+.unit-icon svg{display:block; width:100%; height:100%; overflow:visible;}
+.ui-links path{stroke-dasharray:1; stroke-linecap:butt;}
+@media (prefers-reduced-motion: no-preference){
+  .ui-cap, .ui-tassel, .ui-lens{transform-box:view-box;}
+  .ui-cap{transform-origin:24px 28px;}
+  .ui-tassel{transform-origin:40px 21px;}
+  .ui-node{transform-box:fill-box; transform-origin:center;}
+  .role-card--link:hover .ui-cap, .role-card--link:focus-within .ui-cap{animation:unit-cap-tilt .9s ease-in-out;}
+  .role-card--link:hover .ui-tassel, .role-card--link:focus-within .ui-tassel{animation:unit-tassel-swing .9s ease-in-out;}
+  .role-card--link:hover .ui-lens, .role-card--link:focus-within .ui-lens{animation:unit-lens-sweep 1s ease-in-out;}
+  .role-card--link:hover .ui-links path, .role-card--link:focus-within .ui-links path{animation:unit-line-draw .7s ease-out;}
+  .role-card--link:hover .ui-node, .role-card--link:focus-within .ui-node{animation:unit-node-pop .7s ease-in-out;}
+}
+@keyframes unit-cap-tilt{0%,100%{transform:rotate(0)} 40%{transform:rotate(-7deg)}}
+@keyframes unit-tassel-swing{0%,100%{transform:rotate(0)} 25%{transform:rotate(16deg)} 50%{transform:rotate(-12deg)} 75%{transform:rotate(6deg)}}
+@keyframes unit-lens-sweep{0%,100%{transform:translate(0,0)} 35%{transform:translate(4px,-3px)} 70%{transform:translate(-1px,1px)}}
+@keyframes unit-line-draw{from{stroke-dashoffset:1} to{stroke-dashoffset:0}}
+@keyframes unit-node-pop{0%,100%{transform:scale(1)} 50%{transform:scale(1.3)}}
+
+/* ── Tour guiado (Driver.js, solo en paneles.html) — se adapta a los tokens
+   del sitio (claro/oscuro). Los selectores llevan más especificidad que los
+   de driver.css porque esa hoja usa `.driver-popover-footer button`. ── */
+.driver-popover{
+  background:var(--surface); color:var(--text); font-family:var(--font);
+  border:1px solid var(--border-strong); border-radius:var(--radius-lg);
+  padding:var(--space-5); max-width:340px; box-shadow:0 12px 32px rgba(0,0,0,.3);
+}
+.driver-popover .driver-popover-title{font-family:var(--font); font-size:var(--text-md); font-weight:700; color:var(--text);}
+.driver-popover .driver-popover-description{font-family:var(--font); font-size:var(--text-sm); line-height:var(--leading-base); color:var(--text-muted);}
+.driver-popover .driver-popover-progress-text{color:var(--text-soft); font-size:var(--text-xs);}
+.driver-popover .driver-popover-close-btn{color:var(--text-soft);}
+.driver-popover .driver-popover-close-btn:hover{color:var(--text);}
+.driver-popover .driver-popover-footer button{
+  font-family:var(--font); font-size:var(--text-sm); font-weight:600; text-shadow:none; line-height:1.3;
+  padding:var(--space-2) var(--space-4); border-radius:var(--radius-sm); cursor:pointer;
+  background:var(--surface); color:var(--text); border:1px solid var(--border-strong);
+}
+.driver-popover .driver-popover-footer button:hover{background:var(--surface-2);}
+.driver-popover .driver-popover-footer .driver-popover-next-btn{background:var(--accent); color:var(--accent-contrast); border-color:var(--accent);}
+.driver-popover .driver-popover-footer .driver-popover-next-btn:hover{background:var(--accent); opacity:.88;}
+.driver-popover .driver-popover-arrow-side-left.driver-popover-arrow{border-left-color:var(--surface);}
+.driver-popover .driver-popover-arrow-side-right.driver-popover-arrow{border-right-color:var(--surface);}
+.driver-popover .driver-popover-arrow-side-top.driver-popover-arrow{border-top-color:var(--surface);}
+.driver-popover .driver-popover-arrow-side-bottom.driver-popover-arrow{border-bottom-color:var(--surface);}
+.tour-skip{
+  display:block; margin:var(--space-3) auto 0; background:none; border:none; padding:0;
+  font:inherit; font-size:var(--text-xs); font-weight:600; color:var(--text-soft);
+  text-decoration:underline; cursor:pointer;
+}
+.tour-skip:hover{color:var(--text);}
 
 /* ── Tarjetas de característica — mismo criterio: .features-list
    (el grid contenedor) queda en pages.css. ── */
@@ -135,6 +193,21 @@
 .feature-badge{
   display:inline-block; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.04em;
   padding:2px var(--space-2); border-radius:999px; background:var(--accent); color:var(--accent-contrast);
+}
+
+/* ── Cargando dashboard (dentro del área de contenido, no a pantalla completa) ── */
+.dashboard-loading{
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:var(--space-4); min-height:320px; color:var(--text-muted); font-size:var(--text-sm);
+}
+.dashboard-loading p{margin:0;}
+.dashboard-loading-spinner{
+  width:36px; height:36px; border-radius:50%;
+  border:3px solid color-mix(in srgb, currentColor 25%, transparent);
+  border-top-color:var(--color-primary-text);
+}
+@media (prefers-reduced-motion: no-preference){
+  .dashboard-loading-spinner{animation:btn-spin .8s linear infinite;}
 }
 
 /* ── Estado vacío (dashboards de unidad antes de importar datos) ── */
@@ -199,18 +272,16 @@
 .status-pill.is-active{background:var(--success-bg); color:var(--success);}
 .status-pill.is-inactive{background:var(--error-bg); color:var(--error);}
 
-/* ── Tabs de panel ── */
-.panel-tabs{
-  display:flex; gap:var(--space-2); overflow-x:auto; margin:var(--space-6) 0 var(--space-5);
-  border-bottom:1px solid var(--border); padding-bottom:var(--space-2);
-}
-.panel-tab{
-  flex-shrink:0; background:none; border:1px solid var(--border-strong); border-radius:999px;
+/* ── Selector de dashboard dentro de una categoría (solo si tiene > 1) ── */
+.dashboard-pill-row{display:flex; flex-wrap:wrap; gap:var(--space-2); margin:0 0 var(--space-5);}
+.dashboard-pill{
+  background:none; border:1px solid var(--border-strong); border-radius:999px;
   padding:var(--space-2) var(--space-4); font-family:var(--font); font-size:var(--text-sm);
   color:var(--text-muted); cursor:pointer;
+  transition:background-color .15s ease, color .15s ease, border-color .15s ease;
 }
-.panel-tab:hover{background:var(--surface-2); color:var(--text);}
-.panel-tab.active{background:var(--color-primary); border-color:var(--color-primary); color:#fff; font-weight:600;}
+.dashboard-pill:hover{background:var(--surface-2); color:var(--text);}
+.dashboard-pill.is-active{background:var(--color-primary); border-color:var(--color-primary); color:#fff; font-weight:600;}
 
 .panel-body .panel-desc{font-size:var(--text-sm); color:var(--text-muted); margin:0 0 var(--space-5);}
 

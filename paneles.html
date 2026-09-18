@@ -35,6 +35,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzFFM0E1RiIvPjxyZWN0IHg9IjUiIHk9IjUiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjMiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9Ii45NSIvPjxyZWN0IHg9IjE3IiB5PSI1IiB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHJ4PSIzIiBmaWxsPSIjRThBMzNEIi8+PHJlY3QgeD0iNSIgeT0iMTciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcng9IjMiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9Ii41NSIvPjxyZWN0IHg9IjE3IiB5PSIxNyIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIiByeD0iMyIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iLjc1Ii8+PC9zdmc+Cg==">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.8.0/dist/driver.css">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -54,7 +55,14 @@
         <span>Panel Académico</span>
       </a>
 
-      <nav class="internal-nav" id="internalNav" aria-label="Navegación interna"></nav>
+      <button
+        class="sidebar-toggle"
+        id="sidebarToggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="appSidebar"
+        aria-label="Abrir menú de navegación"
+      ><span></span></button>
 
       <div class="header-controls">
         <button class="theme-toggle" id="themeToggle" type="button" aria-label="Cambiar a modo oscuro" aria-pressed="false">
@@ -62,15 +70,22 @@
           <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
         </button>
 
-        <div class="user-chip">
-          <span class="user-chip-name" id="userChipName"></span>
-          <a class="user-chip-logout" href="index.html" id="userChipLogout">Cerrar sesión</a>
+        <span class="data-status" id="dataStatus"></span>
+
+        <div class="c-menu account-menu">
+          <button type="button" class="account-menu-toggle" id="userChipToggle" aria-haspopup="true" aria-expanded="false" aria-controls="userChipMenu">
+            <span id="userChipName"></span>
+            <svg class="account-menu-chevron" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <ul class="c-menu-account" id="userChipMenu" role="menu" aria-labelledby="userChipToggle" hidden></ul>
         </div>
       </div>
     </div>
   </header>
 
-  <main id="main-content">
+  <div class="app-layout">
+    <aside class="app-sidebar" id="appSidebar"></aside>
+    <main id="main-content">
     <section class="panel-section">
       <div class="wrap">
         <div class="section-head">
@@ -83,21 +98,45 @@
         <ul class="units-list">
           <li class="role-card role-card--link">
             <a class="role-card-link" href="docencia.html">
-              <span class="role-num" aria-hidden="true">1</span>
+              <span class="unit-icon unit-icon--docencia" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <g class="ui-cap">
+                    <path d="M4 19 24 9 44 19 24 29Z"/>
+                    <path d="M13 24v8c0 3 5.4 6 11 6s11-3 11-6v-8"/>
+                    <g class="ui-tassel"><path d="M40 21v12"/><circle cx="40" cy="35.5" r="2.2"/></g>
+                  </g>
+                </svg>
+              </span>
               <h3>Docencia</h3>
               <p>Nómina, carga docente y gestión de plazas por facultad.</p>
             </a>
           </li>
           <li class="role-card role-card--link">
             <a class="role-card-link" href="investigacion.html">
-              <span class="role-num" aria-hidden="true">2</span>
+              <span class="unit-icon unit-icon--investigacion" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path class="ui-bars" d="M7 42v-9M14 42v-15M21 42v-7"/>
+                  <g class="ui-lens"><circle cx="28" cy="19" r="11"/><path d="M36 27l8 8"/></g>
+                </svg>
+              </span>
               <h3>Investigación</h3>
               <p>Proyectos activos y sostenibilidad financiera por facultad.</p>
             </a>
           </li>
           <li class="role-card role-card--link">
             <a class="role-card-link" href="vinculacion.html">
-              <span class="role-num" aria-hidden="true">3</span>
+              <span class="unit-icon unit-icon--vinculacion" aria-hidden="true">
+                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <g class="ui-links">
+                    <path pathLength="1" d="M21.6 15.8 12.4 30.2"/>
+                    <path pathLength="1" d="M26.4 15.8 35.6 30.2"/>
+                    <path pathLength="1" d="M14.5 34H33.5"/>
+                  </g>
+                  <circle class="ui-node" cx="24" cy="12" r="4.5" fill="currentColor" fill-opacity=".15"/>
+                  <circle class="ui-node" cx="10" cy="34" r="4.5" fill="currentColor" fill-opacity=".15"/>
+                  <circle class="ui-node" cx="38" cy="34" r="4.5" fill="currentColor" fill-opacity=".15"/>
+                </svg>
+              </span>
               <h3>Vinculación</h3>
               <p>Programas de vinculación con la sociedad y su ejecución presupuestaria.</p>
             </a>
@@ -105,7 +144,8 @@
         </ul>
       </div>
     </section>
-  </main>
+    </main>
+  </div>
 
   <footer class="site-footer">
     <div class="wrap footer-grid">
@@ -160,9 +200,12 @@
   </footer>
 
   <script src="js/theme.js" defer></script>
+  <script src="js/menu.js" defer></script>
   <script src="js/session.js" defer></script>
   <script src="js/analytics.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/driver.js@1.8.0/dist/driver.js.iife.js" defer></script>
   <script src="js/paneles.js" defer></script>
+  <script src="js/tour.js" defer></script>
 
 </body>
 </html>

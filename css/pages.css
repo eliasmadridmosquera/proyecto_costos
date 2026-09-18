@@ -76,8 +76,8 @@
 .preview-filename{font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 .preview-rowcount{color:var(--text-soft); flex-shrink:0;}
 
-/* ── Paneles (paneles.html) — .panel-tabs/.panel-tab/.stat-card/.chat-*
-   viven en components.css; aquí solo la composición propia de esta página. ── */
+/* ── Paneles (paneles.html) — .dashboard-pill/.stat-card/.chat-* viven en
+   components.css; aquí solo la composición propia de esta página. ── */
 .panel-section{padding:var(--space-10) 0;}
 .role-banner{
   font-size:var(--text-sm); color:var(--text-muted); background:var(--surface-2);

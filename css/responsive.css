@@ -1,17 +1,4 @@
 /* ══════════════════════════════════════════════════════════
-   Teléfonos muy angostos (≤359px, ej. iPhone SE 1.ª gen.)
-   Única excepción max-width del archivo: a este ancho, el header
-   interno (logo + nav + chip de rol) no cabe en una sola fila ni
-   shrinkeando todo lo posible — el nombre del rol es el elemento
-   menos esencial (el rol ya se ve por la página/nav), así que se
-   oculta para liberar espacio y evitar overflow horizontal de la
-   página. "Cerrar sesión" y la nav interna se quedan visibles.
-   ══════════════════════════════════════════════════════════ */
-@media (max-width:359px){
-  .user-chip-name{display:none;}
-}
-
-/* ══════════════════════════════════════════════════════════
    Tablet (≥768px)
    ══════════════════════════════════════════════════════════ */
 @media (min-width:768px){

@@ -75,6 +75,12 @@ function parsearCsv(texto) {
         void status.offsetWidth;
         status.classList.add(tipo === 'success' ? 'is-success' : 'is-error', 'anim-in');
     }
+    function limpiarEstado() {
+        if (!status)
+            return;
+        status.textContent = '';
+        status.classList.remove('is-success', 'is-error', 'anim-in');
+    }
     function actualizarBotonEnvio() {
         submitBtn.disabled = archivoActual === null;
     }
@@ -181,22 +187,33 @@ function parsearCsv(texto) {
         // No hay backend real: se simula el tiempo de procesamiento antes de
         // confirmar. El número de filas y la categoría sí vienen del archivo
         // y de los campos reales, no son inventados.
+        const filasImportadas = archivoActual.totalFilas;
         window.setTimeout(() => {
             submitBtn.classList.remove('is-loading');
             submitBtn.textContent = 'Confirmar y procesar';
-            actualizarBotonEnvio();
             try {
-                localStorage.setItem(CLAVE_DATOS_IMPORTADOS, 'true');
+                localStorage.setItem(CLAVE_DATOS_IMPORTADOS, new Date().toISOString());
             }
             catch {
                 // localStorage puede fallar en modo privado — el demo sigue funcionando para esta carga de página.
             }
-            crearToast('toastContainer', 'success', `Se importaron ${archivoActual.totalFilas} filas. Métricas recalculadas para ${categoriaLabel} — ${anioSelect.value}.`);
+            actualizarEstadoDatos(sesion.rol);
+            crearToast('toastContainer', 'success', `Se importaron ${filasImportadas} filas. Métricas recalculadas para ${categoriaLabel} — ${anioSelect.value}.`);
             trackEvento('csv_import_completed', {
                 user_role: sesion.rol,
-                rows_imported: archivoActual.totalFilas,
+                rows_imported: filasImportadas,
                 category: categoriaLabel,
             });
+            // Estado limpio tras un import exitoso: sin mensajes viejos, sin archivo
+            // ni vista previa (evita re-importar lo mismo por accidente). Año y
+            // categoría se dejan como están, por si se importa otra categoría.
+            limpiarEstado();
+            archivoActual = null;
+            fileInput.value = '';
+            dropzone.classList.remove('has-file');
+            previewBox.hidden = true;
+            mostrarError('archivo', null);
+            actualizarBotonEnvio();
         }, 700);
     });
 })();

@@ -23,6 +23,15 @@ interface VistaUnidad {
   filas: FilaUnidad[];
 }
 
+/** Categoría fija (Gestión X / X / Resumen general) — cada una puede alojar
+ * más de un dashboard/análisis (hoy exactamente 1 cada una; agregar el 2do
+ * es solo sumar un elemento a `dashboards`, sin tocar navegación). */
+interface CategoriaUnidad {
+  id: string;
+  titulo: string;
+  dashboards: VistaUnidad[];
+}
+
 /** El SDK de Chart.js se carga como script global vía CDN (ver <head> de cada
  * página de unidad) — declaración ambiental mínima, no hay @types instalado. */
 interface ChartConfigMinimo {
@@ -38,12 +47,16 @@ declare class Chart {
   destroy(): void;
 }
 
-function hayDatosImportados(): boolean {
-  try {
-    return localStorage.getItem(CLAVE_DATOS_IMPORTADOS) === 'true';
-  } catch {
-    return false;
-  }
+/** Simula el tiempo de carga de un dashboard real (no hay backend todavía). */
+const DURACION_CARGA_DASHBOARD_MS = 800;
+
+function renderCargando(): string {
+  return `
+    <div class="dashboard-loading" role="status">
+      <span class="dashboard-loading-spinner" aria-hidden="true"></span>
+      <p>Cargando dashboard…</p>
+    </div>
+  `;
 }
 
 function renderPlaceholderVacio(): string {
@@ -187,15 +200,8 @@ function crearGraficoBarras(canvas: HTMLCanvasElement, filas: FilaUnidad[]): Cha
   });
 }
 
-interface DefinicionVista {
-  id: string;
-  label: string;
-  datos: VistaUnidad;
-  render: (contenedor: HTMLElement) => void;
-}
-
 /** Contexto que lee el asistente flotante (ts/asistente-flotante.ts) para
- * responder sobre la unidad/vista que el usuario tiene abierta en ese
+ * responder sobre la unidad/dashboard que el usuario tiene abierta en ese
  * momento — antes el chat vivía fijo a Docencia sin importar el tab. */
 interface ContextoAsistente {
   unidad: string;
@@ -203,60 +209,147 @@ interface ContextoAsistente {
 }
 let contextoAsistente: ContextoAsistente | null = null;
 
-/** Tabs con roving tabindex + navegación por flechas — mismo patrón ya
- * probado en el antiguo paneles.ts, generalizado para cualquier unidad. */
-function initTabsUnidad(tabsElemento: HTMLElement, bodyElemento: HTMLElement, unidadLabel: string, vistas: DefinicionVista[]): void {
-  function activarTab(id: string): void {
-    tabsElemento.querySelectorAll('.panel-tab').forEach((btn) => {
-      const esActiva = btn.getAttribute('data-tab') === id;
-      btn.classList.toggle('active', esActiva);
-      btn.setAttribute('aria-selected', String(esActiva));
-      btn.setAttribute('tabindex', esActiva ? '0' : '-1');
-    });
-    bodyElemento.setAttribute('aria-labelledby', `tab-${id}`);
+/** Motor de página de unidad: pinta las categorías fijas en el sub-menú del
+ * sidebar (con deep-linking por hash), y dentro del área de contenido, si la
+ * categoría activa tiene más de 1 dashboard, agrega un selector de pills para
+ * elegir cuál — reutiliza el resto del mecanismo (stat-cards, filtro de
+ * facultad, tabla, gráfico) sin cambios. */
+function initUnidadPagina(unidadHref: string, unidadLabel: string, subId: string, categorias: CategoriaUnidad[]): void {
+  const sesionActual = leerSesionDemo();
+  if (!sesionActual) return; // session.ts ya redirige a iniciar-sesion.html
 
-    const vista = vistas.find((v) => v.id === id);
-    if (vista) {
-      vista.render(bodyElemento);
-      contextoAsistente = { unidad: unidadLabel, vista: vista.datos };
+  const sesion: SesionDemo = sesionActual;
+
+  const roleBanner = document.getElementById('roleBanner');
+  const elSublista = document.getElementById(`sidebarSub-${subId}`);
+  const elBody = document.getElementById('panelBody');
+  if (!(roleBanner instanceof HTMLElement) || !(elSublista instanceof HTMLElement) || !(elBody instanceof HTMLElement)) {
+    return;
+  }
+  // Re-vinculados con tipo explícito: los nested functions de más abajo no
+  // heredan el angostamiento de tipo (narrowing) de las verificaciones de arriba.
+  const sublista: HTMLElement = elSublista;
+  const bodyElemento: HTMLElement = elBody;
+
+  roleBanner.innerHTML =
+    sesion.rol === 'decanato'
+      ? `Estás viendo la facultad de <strong>${sesion.facultad}</strong> + el benchmark institucional agregado.`
+      : `Estás viendo el panorama institucional completo de ${unidadLabel}.`;
+
+  let temporizadorCarga: number | null = null;
+
+  function renderCategoria(categoria: CategoriaUnidad): void {
+    if (!hayDatosImportados()) {
+      bodyElemento.innerHTML = renderPlaceholderVacio();
+      return;
     }
+
+    // Se fija el contexto del asistente ya, sin esperar a que termine la
+    // carga — si el usuario abre el chat durante el spinner, igual sabe dónde está.
+    contextoAsistente = { unidad: unidadLabel, vista: categoria.dashboards[0] };
+    bodyElemento.innerHTML = renderCargando();
+    temporizadorCarga = window.setTimeout(() => montarDashboard(categoria), DURACION_CARGA_DASHBOARD_MS);
   }
 
-  tabsElemento.innerHTML = vistas
-    .map(
-      (v) =>
-        `<button type="button" id="tab-${v.id}" class="panel-tab" role="tab" aria-selected="false" aria-controls="panelBody" tabindex="-1" data-tab="${v.id}">${v.label}</button>`
-    )
+  function montarDashboard(categoria: CategoriaUnidad): void {
+    // El tiempo medido es el del render en sí, sin la espera simulada.
+    const inicioRender = performance.now();
+    let indiceDashboard = 0;
+    let filtroFacultad: string | null = null;
+    let chartActual: Chart | null = null;
+    const mostrarFiltro = sesion.rol !== 'decanato';
+
+    function pintar(): void {
+      const dashboard = categoria.dashboards[indiceDashboard];
+      const filas = filasParaRol(dashboard.filas, sesion, filtroFacultad);
+      const totalMetrica = filas.reduce((acc, f) => acc + f.metricaPrincipal, 0);
+      const totalCosto = filas.reduce((acc, f) => acc + f.costoTotal, 0);
+      const enPositivo = filas.filter((f) => f.balance >= 0).length;
+
+      const selectorDashboards =
+        categoria.dashboards.length > 1
+          ? `<div class="dashboard-pill-row" role="group" aria-label="Elegir análisis">${categoria.dashboards
+              .map(
+                (d, i) =>
+                  `<button type="button" class="dashboard-pill${i === indiceDashboard ? ' is-active' : ''}" data-indice="${i}">${d.titulo}</button>`
+              )
+              .join('')}</div>`
+          : '';
+
+      bodyElemento.innerHTML = `
+        ${selectorDashboards}
+        <p class="panel-desc">${dashboard.descripcion}</p>
+        ${renderStatCardsUnidad([
+          { etiqueta: dashboard.etiquetaMetricaPrincipal, valor: totalMetrica.toLocaleString('es-EC') },
+          { etiqueta: 'Costo total', valor: `$${totalCosto.toLocaleString('es-EC')}` },
+          { etiqueta: dashboard.etiquetaMetrica3, valor: `${enPositivo} / ${filas.length}` },
+        ])}
+        ${mostrarFiltro ? renderFiltroFacultad(FACULTADES_DEMO, filtroFacultad) : ''}
+        <div class="chart-box"><canvas id="chart-${categoria.id}-${indiceDashboard}"></canvas></div>
+        ${renderTablaUnidad(dashboard, filas)}
+      `;
+
+      if (chartActual) chartActual.destroy();
+      const canvas = document.getElementById(`chart-${categoria.id}-${indiceDashboard}`);
+      if (canvas instanceof HTMLCanvasElement) chartActual = crearGraficoBarras(canvas, filas);
+
+      if (categoria.dashboards.length > 1) {
+        bodyElemento.querySelectorAll<HTMLButtonElement>('.dashboard-pill').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const i = Number(btn.getAttribute('data-indice'));
+            if (Number.isNaN(i)) return;
+            indiceDashboard = i;
+            filtroFacultad = null;
+            pintar();
+          });
+        });
+      }
+
+      if (mostrarFiltro) {
+        bodyElemento.querySelectorAll<HTMLButtonElement>('.faculty-pill').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            filtroFacultad = btn.getAttribute('data-facultad') || null;
+            pintar();
+          });
+        });
+      }
+
+      contextoAsistente = { unidad: unidadLabel, vista: dashboard };
+    }
+
+    pintar();
+
+    trackEvento('dashboard_category_viewed', {
+      user_role: sesion.rol,
+      analysis_context: `${subId}:${categoria.id}`,
+      render_time_ms: Math.round(performance.now() - inicioRender),
+    });
+  }
+
+  function activarCategoria(id: string): void {
+    // Si el usuario cambia de categoría mientras la anterior aún "carga",
+    // se descarta esa carga pendiente para que no pise a la nueva.
+    if (temporizadorCarga !== null) window.clearTimeout(temporizadorCarga);
+    const categoria = categorias.find((c) => c.id === id) ?? categorias[0];
+    sublista.querySelectorAll('a').forEach((a) => {
+      a.classList.toggle('active', a.getAttribute('data-categoria') === categoria.id);
+    });
+    renderCategoria(categoria);
+  }
+
+  sublista.innerHTML = categorias
+    .map((c) => `<li><a href="${unidadHref}#${c.id}" data-categoria="${c.id}">${c.titulo}</a></li>`)
     .join('');
 
-  const botonesTab = Array.from(tabsElemento.querySelectorAll<HTMLElement>('.panel-tab'));
-
-  botonesTab.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-tab');
-      if (id) activarTab(id);
-    });
+  window.addEventListener('hashchange', () => {
+    activarCategoria(window.location.hash.slice(1));
   });
 
-  tabsElemento.addEventListener('keydown', (evento) => {
-    const teclasManejadas = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
-    if (!teclasManejadas.includes(evento.key)) return;
-    evento.preventDefault();
+  activarCategoria(window.location.hash.slice(1));
 
-    const indiceActual = botonesTab.findIndex((btn) => btn.getAttribute('aria-selected') === 'true');
-    let indiceNuevo = indiceActual;
-    if (evento.key === 'ArrowLeft') indiceNuevo = (indiceActual - 1 + botonesTab.length) % botonesTab.length;
-    else if (evento.key === 'ArrowRight') indiceNuevo = (indiceActual + 1) % botonesTab.length;
-    else if (evento.key === 'Home') indiceNuevo = 0;
-    else if (evento.key === 'End') indiceNuevo = botonesTab.length - 1;
-
-    const botonNuevo = botonesTab[indiceNuevo];
-    const idNuevo = botonNuevo.getAttribute('data-tab');
-    if (idNuevo) {
-      activarTab(idNuevo);
-      botonNuevo.focus();
-    }
+  trackEvento('dashboard_loaded', {
+    user_role: sesion.rol,
+    dashboard_type: sesion.rol === 'decanato' ? 'faculty_overview' : 'institution_overview',
+    unit: subId,
   });
-
-  if (vistas.length > 0) activarTab(vistas[0].id);
 }

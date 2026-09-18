@@ -45,7 +45,7 @@
    ══════════════════════════════════════════════════════════ */
 @media (min-width:1024px){
   .hero-inner{flex-direction:row; align-items:center; gap:var(--space-12);}
-  .hero-copy{flex:1;}
+  .hero-copy{flex:1.2;}
   .hero-preview{flex:1;}
   .hero-copy h1{font-size:var(--text-2xl);}
 

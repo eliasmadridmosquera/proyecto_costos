@@ -31,6 +31,7 @@ function esInputElement(value: unknown): value is HTMLInputElement {
   if (!(form instanceof HTMLFormElement)) return;
 
   const status = document.getElementById('form-status');
+  const submitBtn = document.getElementById('loginSubmit');
   const campos: CampoLogin[] = ['correo', 'contrasena'];
 
   function getInput(campo: CampoLogin): HTMLInputElement | null {
@@ -97,9 +98,20 @@ function esInputElement(value: unknown): value is HTMLInputElement {
       guardarSesionDemo(rolDemo);
       mixpanel.identify(datos.correo.trim().toLowerCase());
       trackEvento('login_succeeded', { user_role: rolDemo });
-      mostrarEstado('Credenciales válidas. Entrando…', 'success');
+
+      if (submitBtn instanceof HTMLButtonElement) {
+        submitBtn.disabled = true;
+        submitBtn.classList.add('is-loading');
+        submitBtn.textContent = 'Entrando…';
+      }
+
+      // No hay backend real: se simula el tiempo de red antes de confirmar,
+      // igual que ya hace importar.ts al procesar un archivo.
       window.setTimeout(() => {
-        window.location.href = destinoParaRol(rolDemo);
+        crearToast('toastContainer', 'success', `Sesión iniciada como ${SESIONES_DEMO[rolDemo].nombre}.`);
+        window.setTimeout(() => {
+          window.location.href = destinoParaRol(rolDemo);
+        }, 1100);
       }, 600);
       return;
     }

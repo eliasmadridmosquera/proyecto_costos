@@ -5,9 +5,24 @@
   display:inline-block; background:var(--accent); color:var(--accent-contrast);
   padding:var(--space-3) var(--space-5); border-radius:var(--radius-sm); border:none;
   text-decoration:none; font-size:var(--text-base); font-weight:600; cursor:pointer; font-family:var(--font);
+  transition:opacity .15s ease, transform .1s ease;
 }
 .btn-primary:hover{opacity:.88;}
+.btn-primary:active{transform:scale(.97);}
 .btn-primary:disabled{opacity:.55; cursor:default;}
+.btn-primary:disabled:active{transform:none;}
+
+/* ── Spinner de carga (login/importar simulan una espera de red) ── */
+.btn-primary.is-loading::before{
+  content:''; display:inline-block; width:14px; height:14px; margin-right:var(--space-2);
+  vertical-align:-2px; border-radius:50%;
+  border:2px solid color-mix(in srgb, currentColor 30%, transparent);
+  border-top-color:currentColor;
+}
+@media (prefers-reduced-motion: no-preference){
+  .btn-primary.is-loading::before{animation:btn-spin .6s linear infinite;}
+}
+@keyframes btn-spin{to{transform:rotate(360deg);}}
 
 /* ── Formulario de solicitud de acceso ── */
 .access-panel{
@@ -92,6 +107,17 @@
 .role-card h3{font-size:var(--text-md); margin:0 0 var(--space-1); font-weight:600;}
 .role-card p{font-size:var(--text-sm); color:var(--text-muted); margin:0;}
 
+/* ── Variante clickeable de .role-card (hub de unidades en paneles.html) —
+   modificador aparte para no agregar affordance falsa a las tarjetas
+   estáticas de index.html, que comparten la misma clase base. ── */
+.role-card--link{padding:0;}
+.role-card-link{
+  display:block; padding:var(--space-5); color:inherit; text-decoration:none;
+  border-radius:inherit; transition:background-color .15s ease, transform .1s ease;
+}
+.role-card-link:hover{background:var(--surface-2);}
+.role-card-link:active{transform:scale(.98);}
+
 /* ── Tarjetas de característica — mismo criterio: .features-list
    (el grid contenedor) queda en pages.css. ── */
 .feature-item{
@@ -104,8 +130,12 @@
   display:flex; align-items:center; justify-content:center; color:var(--color-primary-text);
 }
 .feature-icon svg{width:20px; height:20px;}
-.feature-item h3{font-size:var(--text-md); margin:0 0 3px; font-weight:600;}
+.feature-item h3{font-size:var(--text-md); margin:0 0 3px; font-weight:600; display:flex; align-items:center; gap:var(--space-2);}
 .feature-item p{font-size:var(--text-sm); color:var(--text-muted); margin:0;}
+.feature-badge{
+  display:inline-block; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.04em;
+  padding:2px var(--space-2); border-radius:999px; background:var(--accent); color:var(--accent-contrast);
+}
 
 /* ── Tablas de datos (paneles + usuarios + vista previa de importar) ── */
 .table-scroll{overflow-x:auto; max-height:240px; overflow-y:auto;}

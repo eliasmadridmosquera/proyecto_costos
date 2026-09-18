@@ -27,7 +27,7 @@
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Paneles — Panel Académico</title>
-<meta name="description" content="Dashboards de costos institucionales: Docencia, Investigación, Nombramientos y Calidad×Costo, con acceso diferenciado por rol.">
+<meta name="description" content="Punto de entrada a los dashboards de costos institucionales por unidad sustantiva: Docencia, Investigación y Vinculación, con acceso diferenciado por rol.">
 <meta name="robots" content="noindex">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -74,12 +74,35 @@
     <section class="panel-section">
       <div class="wrap">
         <div class="section-head">
-          <h1>Paneles de costos</h1>
+          <h1>¿Qué querés revisar?</h1>
           <p id="roleBanner" class="role-banner"></p>
         </div>
 
-        <nav class="panel-tabs" id="panelTabs" aria-label="Categorías de panel" role="tablist"></nav>
-        <div class="panel-body" id="panelBody" role="tabpanel"></div>
+        <p class="units-help">Selecciona la unidad sustantiva sobre la que quieres ver métricas.</p>
+
+        <ul class="units-list">
+          <li class="role-card role-card--link">
+            <a class="role-card-link" href="docencia.html">
+              <span class="role-num" aria-hidden="true">1</span>
+              <h3>Docencia</h3>
+              <p>Nómina, carga docente y gestión de plazas por facultad.</p>
+            </a>
+          </li>
+          <li class="role-card role-card--link">
+            <a class="role-card-link" href="investigacion.html">
+              <span class="role-num" aria-hidden="true">2</span>
+              <h3>Investigación</h3>
+              <p>Proyectos activos y sostenibilidad financiera por facultad.</p>
+            </a>
+          </li>
+          <li class="role-card role-card--link">
+            <a class="role-card-link" href="vinculacion.html">
+              <span class="role-num" aria-hidden="true">3</span>
+              <h3>Vinculación</h3>
+              <p>Programas de vinculación con la sociedad y su ejecución presupuestaria.</p>
+            </a>
+          </li>
+        </ul>
       </div>
     </section>
   </main>
@@ -139,7 +162,6 @@
   <script src="js/theme.js" defer></script>
   <script src="js/session.js" defer></script>
   <script src="js/analytics.js" defer></script>
-  <script src="js/paneles.data.js" defer></script>
   <script src="js/paneles.js" defer></script>
 
 </body>

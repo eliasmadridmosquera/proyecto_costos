@@ -1,8 +1,3 @@
-type ToastVariante = 'success' | 'error';
-
-const DURACION_TOAST_MS = 4000;
-const MAX_TOASTS_VISIBLES = 3;
-
 (function initPlayground(): void {
   initAlertClose();
   initDialog();
@@ -96,19 +91,6 @@ const MAX_TOASTS_VISIBLES = 3;
     });
   }
 
-  function crearToast(contenedor: HTMLElement, variante: ToastVariante, mensaje: string): void {
-    const toast = document.createElement('div');
-    toast.className = `c-toast c-toast--${variante}`;
-    toast.textContent = mensaje;
-    contenedor.appendChild(toast);
-
-    while (contenedor.children.length > MAX_TOASTS_VISIBLES) {
-      contenedor.firstElementChild?.remove();
-    }
-
-    window.setTimeout(() => toast.remove(), DURACION_TOAST_MS);
-  }
-
   function initToasts(): void {
     const contenedorEl = document.getElementById('pgToastContainer');
     const botonExitoEl = document.getElementById('pgToastShowSuccess');
@@ -131,11 +113,11 @@ const MAX_TOASTS_VISIBLES = 3;
     });
 
     botonExito.addEventListener('click', () => {
-      crearToast(contenedor, 'success', 'Los cambios se guardaron correctamente.');
+      crearToast('pgToastContainer', 'success', 'Los cambios se guardaron correctamente.');
     });
 
     botonError.addEventListener('click', () => {
-      crearToast(contenedor, 'error', 'No se pudo completar la solicitud. Intenta de nuevo.');
+      crearToast('pgToastContainer', 'error', 'No se pudo completar la solicitud. Intenta de nuevo.');
     });
   }
 })();

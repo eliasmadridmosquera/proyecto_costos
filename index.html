@@ -29,12 +29,12 @@
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Panel Académico — Gestión de costos institucionales</title>
-<meta name="description" content="Panel Académico: dashboards de costos institucionales con acceso por rol para Administradores, Rectorado, Decanato y Visitantes.">
+<meta name="description" content="Panel Académico: dashboards de costos institucionales con acceso por rol para Administradores, Rectorado, Decanato y Auditores Externos.">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Panel Académico — Gestión de costos institucionales">
-<meta property="og:description" content="Dashboards de costos institucionales con acceso diferenciado por rol para Administradores, Rectorado, Decanato y Visitantes.">
+<meta property="og:description" content="Dashboards de costos institucionales con acceso diferenciado por rol para Administradores, Rectorado, Decanato y Auditores Externos.">
 <meta property="og:image" content="og-image.png">
 <!-- TODO: reemplazar por la URL real cuando el proyecto tenga dominio propio -->
 <meta property="og:url" content="https://panel-academico.example.edu/">
@@ -42,7 +42,7 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Panel Académico — Gestión de costos institucionales">
-<meta name="twitter:description" content="Dashboards de costos institucionales con acceso diferenciado por rol para Administradores, Rectorado, Decanato y Visitantes.">
+<meta name="twitter:description" content="Dashboards de costos institucionales con acceso diferenciado por rol para Administradores, Rectorado, Decanato y Auditores Externos.">
 <meta name="twitter:image" content="og-image.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -207,8 +207,8 @@
           </li>
           <li class="role-card">
             <span class="role-num" aria-hidden="true">5</span>
-            <h3>Visitante</h3>
-            <p>Contexto público, sin necesidad de pedir acceso</p>
+            <h3>Auditor externo</h3>
+            <p>Panorama institucional en solo lectura, sin exportar ni calcular</p>
           </li>
         </ol>
       </div>
@@ -222,6 +222,15 @@
         </div>
 
         <ul class="features-list">
+          <li class="feature-item">
+            <span class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/></svg>
+            </span>
+            <div>
+              <h3>Pregúntale a tus datos <span class="feature-badge">Con IA</span></h3>
+              <p>Resuelve dudas sobre déficit, MNI o tendencias en lenguaje natural, sin armar un reporte desde cero.</p>
+            </div>
+          </li>
           <li class="feature-item">
             <span class="feature-icon" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M12 20V4"/><path d="M20 20v-7"/><path d="M2 20h20"/></svg>
@@ -238,15 +247,6 @@
             <div>
               <h3>Carga el archivo base, no fórmulas</h3>
               <p>Sube el CSV o Excel del año y el sistema aplica la metodología por ti — se acabó el notebook manual.</p>
-            </div>
-          </li>
-          <li class="feature-item">
-            <span class="feature-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H9l-4 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/></svg>
-            </span>
-            <div>
-              <h3>Pregúntale a tus datos</h3>
-              <p>Resuelve dudas sobre déficit, MNI o tendencias en lenguaje natural, sin armar un reporte desde cero.</p>
             </div>
           </li>
           <li class="feature-item">

@@ -84,6 +84,17 @@
   border:1px solid var(--border); border-radius:var(--radius-sm); padding:var(--space-3) var(--space-4);
   margin:var(--space-3) 0 0;
 }
+
+/* ── Hub de unidades sustantivas (paneles.html) — 3 tarjetas, no 5 como
+   .roles-list de index.html, por eso un grid-container propio. ── */
+.units-help{font-size:var(--text-sm); color:var(--text-muted); margin:var(--space-5) 0 var(--space-4);}
+.units-list{
+  list-style:none; margin:0; padding:0;
+  display:grid; grid-template-columns:1fr; gap:var(--space-3);
+}
+@media (min-width:768px){
+  .units-list{grid-template-columns:repeat(3, 1fr);}
+}
 .stat-grid{
   display:grid; grid-template-columns:1fr; gap:var(--space-3); margin-bottom:var(--space-5);
 }

@@ -1,6 +1,9 @@
 "use strict";
 const MAX_BYTES = 10 * 1024 * 1024;
 const FILAS_VISTA_PREVIA = 5;
+// Leído por los dashboards de unidad (docencia/investigación/vinculación)
+// para decidir si muestran placeholders vacíos o los datos quemados.
+const CLAVE_DATOS_IMPORTADOS = 'panelacademico-datos-importados';
 /** Parser CSV simple: separa por comas, no maneja comillas con comas internas.
  * Suficiente para la vista previa de esta simulación en frontend. */
 function parsearCsv(texto) {
@@ -169,15 +172,22 @@ function parsearCsv(texto) {
         }
         const categoriaLabel = categoriaSelect.options[categoriaSelect.selectedIndex]?.text ?? categoriaSelect.value;
         submitBtn.disabled = true;
+        submitBtn.classList.add('is-loading');
         submitBtn.textContent = 'Procesando…';
-        mostrarEstado('Procesando archivo…', 'success');
         // No hay backend real: se simula el tiempo de procesamiento antes de
         // confirmar. El número de filas y la categoría sí vienen del archivo
         // y de los campos reales, no son inventados.
         window.setTimeout(() => {
+            submitBtn.classList.remove('is-loading');
             submitBtn.textContent = 'Confirmar y procesar';
             actualizarBotonEnvio();
-            mostrarEstado(`Se importaron ${archivoActual.totalFilas} filas. Métricas recalculadas para ${categoriaLabel} — ${anioSelect.value}.`, 'success');
+            try {
+                localStorage.setItem(CLAVE_DATOS_IMPORTADOS, 'true');
+            }
+            catch {
+                // localStorage puede fallar en modo privado — el demo sigue funcionando para esta carga de página.
+            }
+            crearToast('toastContainer', 'success', `Se importaron ${archivoActual.totalFilas} filas. Métricas recalculadas para ${categoriaLabel} — ${anioSelect.value}.`);
             trackEvento('csv_import_completed', {
                 user_role: sesion?.rol ?? null,
                 rows_imported: archivoActual.totalFilas,

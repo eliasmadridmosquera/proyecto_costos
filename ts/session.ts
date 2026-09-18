@@ -32,12 +32,14 @@ const SESIONES_DEMO: Record<RolDemo, SesionDemo> = {
   admin: { rol: 'admin', nombre: 'Admin Demo', facultad: null },
   rectorado: { rol: 'rectorado', nombre: 'Rectorado Demo', facultad: null },
   decanato: { rol: 'decanato', nombre: 'Decanato Demo', facultad: 'Ciencias Sociales' },
-  visitante: { rol: 'visitante', nombre: 'Visitante Demo', facultad: null },
+  visitante: { rol: 'visitante', nombre: 'Auditor Externo Demo', facultad: null },
 };
 
+// El hub de unidades sustantivas (paneles.html) es el destino universal tras
+// login — Importar y Usuarios pasan a ser enlaces del nav interno, no destinos.
 const DESTINO_LOGIN: Record<RolDemo, string> = {
   webmaster: 'paneles.html',
-  admin: 'importar.html',
+  admin: 'paneles.html',
   rectorado: 'paneles.html',
   decanato: 'paneles.html',
   visitante: 'paneles.html',

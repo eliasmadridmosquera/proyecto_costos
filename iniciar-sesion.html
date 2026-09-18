@@ -134,7 +134,7 @@
               Mantener sesión iniciada
             </label>
 
-            <button type="submit" class="btn-primary">Iniciar sesión</button>
+            <button type="submit" class="btn-primary" id="loginSubmit">Iniciar sesión</button>
             <p class="form-status" id="form-status" role="status"></p>
           </form>
 
@@ -146,6 +146,8 @@
       </div>
     </section>
   </main>
+
+  <div class="c-toast-container" id="toastContainer" aria-live="polite"></div>
 
   <footer class="site-footer">
     <div class="wrap footer-grid">
@@ -204,6 +206,7 @@
   <script src="js/validators.js" defer></script>
   <script src="js/session.js" defer></script>
   <script src="js/analytics.js" defer></script>
+  <script src="js/toast.js" defer></script>
   <script src="js/login.js" defer></script>
 
 </body>

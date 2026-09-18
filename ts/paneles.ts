@@ -242,7 +242,9 @@ interface MensajeChat {
       const esActiva = btn.getAttribute('data-tab') === id;
       btn.classList.toggle('active', esActiva);
       btn.setAttribute('aria-selected', String(esActiva));
+      btn.setAttribute('tabindex', esActiva ? '0' : '-1');
     });
+    bodyElemento.setAttribute('aria-labelledby', `tab-${id}`);
 
     if (id === 'asistente') {
       bodyElemento.innerHTML = renderizarChat();
@@ -268,15 +270,37 @@ interface MensajeChat {
   tabsElemento.innerHTML = tabs
     .map(
       (t) =>
-        `<button type="button" class="panel-tab" role="tab" aria-selected="false" data-tab="${t.id}">${t.label}</button>`
+        `<button type="button" id="tab-${t.id}" class="panel-tab" role="tab" aria-selected="false" aria-controls="panelBody" tabindex="-1" data-tab="${t.id}">${t.label}</button>`
     )
     .join('');
 
-  tabsElemento.querySelectorAll('.panel-tab').forEach((btn) => {
+  const botonesTab = Array.from(tabsElemento.querySelectorAll<HTMLElement>('.panel-tab'));
+
+  botonesTab.forEach((btn) => {
     btn.addEventListener('click', () => {
       const id = btn.getAttribute('data-tab');
       if (id === 'asistente' || PANELES.some((p) => p.id === id)) activarTab(id as TabId);
     });
+  });
+
+  tabsElemento.addEventListener('keydown', (evento) => {
+    const teclasManejadas = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
+    if (!teclasManejadas.includes(evento.key)) return;
+    evento.preventDefault();
+
+    const indiceActual = botonesTab.findIndex((btn) => btn.getAttribute('aria-selected') === 'true');
+    let indiceNuevo = indiceActual;
+    if (evento.key === 'ArrowLeft') indiceNuevo = (indiceActual - 1 + botonesTab.length) % botonesTab.length;
+    else if (evento.key === 'ArrowRight') indiceNuevo = (indiceActual + 1) % botonesTab.length;
+    else if (evento.key === 'Home') indiceNuevo = 0;
+    else if (evento.key === 'End') indiceNuevo = botonesTab.length - 1;
+
+    const botonNuevo = botonesTab[indiceNuevo];
+    const idNuevo = botonNuevo.getAttribute('data-tab');
+    if (idNuevo === 'asistente' || PANELES.some((p) => p.id === idNuevo)) {
+      activarTab(idNuevo as TabId);
+      botonNuevo.focus();
+    }
   });
 
   activarTab(PANELES[0].id);

@@ -1,9 +1,6 @@
 "use strict";
 const MAX_BYTES = 10 * 1024 * 1024;
 const FILAS_VISTA_PREVIA = 5;
-// Leído por los dashboards de unidad (docencia/investigación/vinculación)
-// para decidir si muestran placeholders vacíos o los datos quemados.
-const CLAVE_DATOS_IMPORTADOS = 'panelacademico-datos-importados';
 /** Parser CSV simple: separa por comas, no maneja comillas con comas internas.
  * Suficiente para la vista previa de esta simulación en frontend. */
 function parsearCsv(texto) {

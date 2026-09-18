@@ -2,6 +2,9 @@
 /** Sesión demo compartida entre páginas internas (paneles, usuarios, importar).
  * No hay backend: el rol activo se guarda en localStorage, igual que el tema. */
 const CLAVE_SESION = 'panelacademico-demo-rol';
+/** La setea importar.ts tras un CSV exitoso; la leen los dashboards de unidad
+ * (docencia/investigación/vinculación) para decidir placeholder vs. datos reales. */
+const CLAVE_DATOS_IMPORTADOS = 'panelacademico-datos-importados';
 /** Lista de facultades demo, compartida entre paneles.html (datos por facultad)
  * y usuarios.html (selector de facultad al editar un usuario Decanato). */
 const FACULTADES_DEMO = [

@@ -137,6 +137,30 @@
   padding:2px var(--space-2); border-radius:999px; background:var(--accent); color:var(--accent-contrast);
 }
 
+/* ── Estado vacío (dashboards de unidad antes de importar datos) ── */
+.empty-state{
+  text-align:center; padding:var(--space-10) var(--space-5);
+  border:1px dashed var(--border-strong); border-radius:var(--radius-lg); background:var(--surface-2);
+}
+.empty-state-title{font-size:var(--text-md); font-weight:600; margin:0 0 var(--space-2);}
+.empty-state-text{font-size:var(--text-sm); color:var(--text-muted); margin:0 0 var(--space-5);}
+
+/* ── Filtro por facultad (pills) — dashboards de unidad ── */
+.faculty-filter{display:flex; flex-wrap:wrap; gap:var(--space-2); margin-bottom:var(--space-5);}
+.faculty-pill{
+  background:var(--surface); border:1px solid var(--border-strong); border-radius:999px;
+  padding:var(--space-2) var(--space-4); font-size:var(--text-xs); font-weight:600; color:var(--text-muted);
+  cursor:pointer; transition:background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.faculty-pill:hover{background:var(--surface-2); color:var(--text);}
+.faculty-pill.is-active{background:var(--color-primary); border-color:var(--color-primary); color:#fff;}
+
+/* ── Contenedor del gráfico Chart.js — dashboards de unidad ── */
+.chart-box{
+  position:relative; height:280px; margin-bottom:var(--space-5);
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:var(--space-4);
+}
+
 /* ── Tablas de datos (paneles + usuarios + vista previa de importar) ── */
 .table-scroll{overflow-x:auto; max-height:240px; overflow-y:auto;}
 /* Variante sin límite de alto: para tablas cortas que deben verse completas

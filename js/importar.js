@@ -49,7 +49,14 @@ function parsearCsv(texto) {
     const previewRowcount = elPreviewRowcount;
     const previewTable = elPreviewTable;
     const status = document.getElementById('form-status');
-    const sesion = leerSesionDemo();
+    const sesionActual = leerSesionDemo();
+    if (!sesionActual || (sesionActual.rol !== 'webmaster' && sesionActual.rol !== 'admin')) {
+        window.location.href = 'index.html';
+        return;
+    }
+    // Re-vinculado con tipo explícito: los nested functions de más abajo no
+    // heredan el angostamiento de tipo (narrowing) de la verificación de arriba.
+    const sesion = sesionActual;
     let archivoActual = null;
     function mostrarError(campo, mensaje) {
         const errorEl = document.getElementById(`${campo}-error`);
@@ -114,7 +121,7 @@ function parsearCsv(texto) {
             renderizarVistaPrevia(archivoActual);
             actualizarBotonEnvio();
             trackEvento('csv_file_selected', {
-                user_role: sesion?.rol ?? null,
+                user_role: sesion.rol,
                 data_source_type: 'spreadsheet',
             });
         };
@@ -186,7 +193,7 @@ function parsearCsv(texto) {
             }
             crearToast('toastContainer', 'success', `Se importaron ${archivoActual.totalFilas} filas. Métricas recalculadas para ${categoriaLabel} — ${anioSelect.value}.`);
             trackEvento('csv_import_completed', {
-                user_role: sesion?.rol ?? null,
+                user_role: sesion.rol,
                 rows_imported: archivoActual.totalFilas,
                 category: categoriaLabel,
             });

@@ -31,19 +31,22 @@ const DESTINO_LOGIN = {
     decanato: 'paneles.html',
     visitante: 'paneles.html',
 };
+const ENLACES_UNIDADES = [
+    { href: 'paneles.html', label: 'Paneles' },
+    { href: 'docencia.html', label: 'Docencia' },
+    { href: 'investigacion.html', label: 'Investigación' },
+    { href: 'vinculacion.html', label: 'Vinculación' },
+];
 const NAV_INTERNA = {
     webmaster: [
-        { href: 'paneles.html', label: 'Paneles' },
+        ...ENLACES_UNIDADES,
         { href: 'usuarios.html', label: 'Usuarios' },
         { href: 'importar.html', label: 'Importar' },
     ],
-    admin: [
-        { href: 'paneles.html', label: 'Paneles' },
-        { href: 'importar.html', label: 'Importar' },
-    ],
-    rectorado: [{ href: 'paneles.html', label: 'Paneles' }],
-    decanato: [{ href: 'paneles.html', label: 'Paneles' }],
-    visitante: [{ href: 'paneles.html', label: 'Paneles' }],
+    admin: [...ENLACES_UNIDADES, { href: 'importar.html', label: 'Importar' }],
+    rectorado: ENLACES_UNIDADES,
+    decanato: ENLACES_UNIDADES,
+    visitante: ENLACES_UNIDADES,
 };
 function esRolDemo(valor) {
     return valor === 'webmaster' || valor === 'admin' || valor === 'rectorado' || valor === 'decanato' || valor === 'visitante';

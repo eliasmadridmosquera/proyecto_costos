@@ -42,12 +42,12 @@ const VISTAS_DOCENCIA: VistaUnidad[] = [
     etiquetaMetrica3: 'facultades sobre el índice objetivo',
     esIndice: true,
     filas: [
-      { facultad: 'Ciencias Sociales', metricaPrincipal: 3120, costoTotal: 2_180_000, balance: -1, tendencia: 'baja' },
-      { facultad: 'Ingeniería', metricaPrincipal: 4210, costoTotal: 4_320_000, balance: 2, tendencia: 'alza' },
-      { facultad: 'Ciencias de la Vida', metricaPrincipal: 2870, costoTotal: 1_960_000, balance: 1, tendencia: 'estable' },
-      { facultad: 'Artes y Humanidades', metricaPrincipal: 1540, costoTotal: 1_120_000, balance: -2, tendencia: 'baja' },
-      { facultad: 'Ciencias Exactas', metricaPrincipal: 3390, costoTotal: 2_640_000, balance: 1, tendencia: 'alza' },
-      { facultad: 'Negocios', metricaPrincipal: 2650, costoTotal: 1_980_000, balance: 0, tendencia: 'estable' },
+      { facultad: 'Ciencias Sociales', metricaPrincipal: 3120, costoTotal: 2_260_000, balance: -1, tendencia: 'baja' },
+      { facultad: 'Ingeniería', metricaPrincipal: 4210, costoTotal: 4_480_000, balance: 2, tendencia: 'alza' },
+      { facultad: 'Ciencias de la Vida', metricaPrincipal: 2870, costoTotal: 2_040_000, balance: 1, tendencia: 'estable' },
+      { facultad: 'Artes y Humanidades', metricaPrincipal: 1540, costoTotal: 1_190_000, balance: -2, tendencia: 'baja' },
+      { facultad: 'Ciencias Exactas', metricaPrincipal: 3390, costoTotal: 2_750_000, balance: 1, tendencia: 'alza' },
+      { facultad: 'Negocios', metricaPrincipal: 2650, costoTotal: 2_070_000, balance: 0, tendencia: 'estable' },
     ],
   },
 ];

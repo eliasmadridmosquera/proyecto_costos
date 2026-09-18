@@ -75,9 +75,13 @@
       <div class="wrap">
         <div class="section-head">
           <h1>Investigación</h1>
-          <p>Esta unidad está en construcción — pronto vas a poder ver aquí Gestión Investigación, Investigación y Resumen general, con datos que se cargan desde Importar.</p>
+          <p id="roleBanner" class="role-banner"></p>
         </div>
-        <a class="btn-secondary" href="paneles.html">&larr; Volver a unidades</a>
+
+        <nav class="panel-tabs" id="panelTabs" aria-label="Vistas de Investigación" role="tablist"></nav>
+        <div class="panel-body" id="panelBody" role="tabpanel"></div>
+
+        <p><a class="btn-secondary" href="paneles.html">&larr; Volver a unidades</a></p>
       </div>
     </section>
   </main>
@@ -137,6 +141,10 @@
   <script src="js/theme.js" defer></script>
   <script src="js/session.js" defer></script>
   <script src="js/analytics.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" defer></script>
+  <script src="js/unidad-dashboard.js" defer></script>
+  <script src="js/investigacion.data.js" defer></script>
+  <script src="js/investigacion.js" defer></script>
 
 </body>
 </html>

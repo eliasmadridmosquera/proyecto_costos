@@ -64,6 +64,8 @@
 .dropzone-icon{width:28px; height:28px; color:var(--text-soft);}
 .dropzone-text{margin:0; font-size:var(--text-base); font-weight:600;}
 .dropzone-hint{margin:0; font-size:var(--text-xs); color:var(--text-soft);}
+.importer-sample{margin:0 0 var(--space-5); font-size:var(--text-xs); color:var(--text-soft);}
+.importer-sample a{color:var(--color-primary-text); font-weight:600; text-decoration:underline; text-underline-offset:2px;}
 
 .preview-box{
   border:1px solid var(--border); border-radius:var(--radius); margin:var(--space-2) 0 var(--space-5); overflow:hidden;

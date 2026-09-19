@@ -1,0 +1,19 @@
+facultad,carrera,docentes_tc,horas_semanales,costo_nomina_mensual_usd
+Ciencias Sociales,Psicología,14,560,58800
+Ciencias Sociales,Sociología,9,360,37800
+Ciencias Sociales,Derecho,18,720,75600
+Ingeniería,Ingeniería Civil,22,880,101200
+Ingeniería,Ingeniería de Sistemas,20,800,92000
+Ingeniería,Ingeniería Eléctrica,15,600,69000
+Ciencias de la Vida,Biología,12,480,52800
+Ciencias de la Vida,Enfermería,16,640,67200
+Ciencias de la Vida,Nutrición,7,280,29400
+Artes y Humanidades,Diseño Gráfico,10,400,40000
+Artes y Humanidades,Música,6,240,25200
+Artes y Humanidades,Literatura,8,320,32000
+Ciencias Exactas,Matemáticas,13,520,59800
+Ciencias Exactas,Física,11,440,50600
+Ciencias Exactas,Estadística,9,360,41400
+Negocios,Administración,19,760,76000
+Negocios,Contabilidad,14,560,56000
+Negocios,Marketing,10,400,42000

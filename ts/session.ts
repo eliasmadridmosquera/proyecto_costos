@@ -183,6 +183,49 @@ function destinoParaRol(rol: RolDemo): string {
   return DESTINO_LOGIN[rol];
 }
 
+/** Confirmación antes de "Reiniciar demo": borra datos y no se puede deshacer.
+ * Reutiliza el componente Dialog del catálogo (.c-dialog + <dialog>.showModal():
+ * foco atrapado, Escape cancela). Se crea al abrir y se retira al cerrar, para
+ * no tocar el marcado de las 6 páginas internas. */
+function confirmarReinicioDemo(devolverFoco: HTMLElement | null, alConfirmar: () => void): void {
+  const dialogo = document.createElement('dialog');
+  dialogo.className = 'c-dialog';
+  dialogo.setAttribute('aria-labelledby', 'resetDialogTitle');
+  dialogo.setAttribute('aria-describedby', 'resetDialogDesc');
+  dialogo.innerHTML = `
+    <h2 class="c-dialog-title" id="resetDialogTitle">¿Reiniciar la demo?</h2>
+    <p id="resetDialogDesc">Se borrarán los datos importados y el tour volverá a aparecer. Esta acción no se puede deshacer.</p>
+    <div class="c-dialog-actions">
+      <button type="button" class="c-btn c-btn--secondary" id="resetDialogCancel" autofocus>Cancelar</button>
+      <button type="button" class="c-btn c-btn--destructive" id="resetDialogConfirm">Reiniciar</button>
+    </div>
+  `;
+  document.body.appendChild(dialogo);
+
+  const cancelar = dialogo.querySelector('#resetDialogCancel');
+  const confirmar = dialogo.querySelector('#resetDialogConfirm');
+  if (!(cancelar instanceof HTMLButtonElement) || !(confirmar instanceof HTMLButtonElement)) {
+    dialogo.remove();
+    return;
+  }
+  const botonCancelar: HTMLButtonElement = cancelar;
+  const botonConfirmar: HTMLButtonElement = confirmar;
+
+  // Cubre Escape (evento nativo "cancel") y ambos botones: el foco vuelve
+  // siempre al control que abrió el diálogo.
+  dialogo.addEventListener('close', () => {
+    dialogo.remove();
+    if (devolverFoco) devolverFoco.focus();
+  });
+  botonCancelar.addEventListener('click', () => dialogo.close());
+  botonConfirmar.addEventListener('click', () => {
+    dialogo.close();
+    alConfirmar();
+  });
+
+  dialogo.showModal();
+}
+
 /** Pinta el chip de usuario + sidebar en páginas autenticadas. Si la página
  * no tiene el marcado esperado (páginas públicas), no hace nada. */
 (function initHeaderInterno(): void {
@@ -302,13 +345,19 @@ function destinoParaRol(rol: RolDemo): string {
     const reiniciar = document.getElementById('userChipReset');
     if (reiniciar) {
       reiniciar.addEventListener('click', () => {
-        try {
-          localStorage.removeItem(CLAVE_DATOS_IMPORTADOS);
-        } catch {
-          // localStorage puede fallar en modo privado — no hay nada que limpiar en ese caso.
-        }
-        limpiarTourVisto();
-        window.location.reload();
+        // Se cierra el menú antes de abrir el diálogo (igual que "Ver tour"):
+        // así el foco puede volver al botón de cuenta, que sí queda visible.
+        listaCuenta.hidden = true;
+        if (toggleCuenta) toggleCuenta.setAttribute('aria-expanded', 'false');
+        confirmarReinicioDemo(toggleCuenta, () => {
+          try {
+            localStorage.removeItem(CLAVE_DATOS_IMPORTADOS);
+          } catch {
+            // localStorage puede fallar en modo privado — no hay nada que limpiar en ese caso.
+          }
+          limpiarTourVisto();
+          window.location.reload();
+        });
       });
     }
 
